@@ -8,9 +8,13 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -256,7 +260,7 @@ public class Amazons extends GamePlayer{
 	    // JCmoponent method
 	    protected void paintComponent(Graphics gg){
 		    Graphics g = (Graphics2D) gg;
-
+		    
 		    for(int i = 0; i < rows + 1; i++){
 			    g.drawLine(i * cellDim + offset, offset, i * cellDim + offset, rows * cellDim + offset);
 			    g.drawLine(offset, i*cellDim + offset, cols * cellDim + offset, i*cellDim + offset);					 
@@ -288,8 +292,14 @@ public class Amazons extends GamePlayer{
 				    g.drawOval(posX, posY, 50, 50);
 			    }
 		      }
+		      
 	    }
-
+		    try {
+		    	BufferedImage vine = ImageIO.read(new File("vine.png"));
+		    	g.drawImage(vine, 450, 0,500,500, null);
+		    }catch(Exception e) {
+		    	e.printStackTrace();
+		    }
 	    }//method
 
 	    //JComponent method
