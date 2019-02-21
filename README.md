@@ -1,5 +1,6 @@
 # 322_Amazons-AI
 Read Me!
+
 Artificial Intelligence agent to play the game Amazons against other classmates AI
 
 To download:
@@ -10,8 +11,11 @@ To download:
 5. Use root directory of team-00 in the git repo you just cloned.
 6. It is now referencing that file in that folder. You can now make any changes in your editor then save it.
 7. To push to git do:
+    
     a) git add .
+    
     b) git commit -m "your commit message (general description of what you changed)"
+   
     c) git push
 8. Before you push make sure you run "git pull" to ensure your repository is up to date.
 
