@@ -203,7 +203,7 @@ public class Amazons extends GamePlayer{
 
 
 	    Amazons game = null; 
-	private BoardGameModel gameModel = null;
+	    private BoardGameModel gameModel = null;
 
 	    boolean playerAMove;
 
