@@ -38,15 +38,71 @@ public class Board extends JPanel{
 		matrix[9][3] = "B";
 		matrix[9][6] = "B";
 	}
-	public ArrayList<String> getValidMoves(){
+	public ArrayList<String> getValidMoves(String player){
+		//player boolean is for whose turn it is true=white, false=black
 		ArrayList<String> moves = new ArrayList<String>();
+		ArrayList<String> qMoves = new ArrayList<String>();
 		
+		for(int i = 0; i<size; i++) {
+			for(int j = 0; j<size; j++	) {
+				if(matrix[i][j].equalsIgnoreCase(player)) {
+					qMoves.addAll(queenMoves(i, j, player));
+				}
+			}
+		}
+		for(String move : qMoves) {
+			System.out.println(move);
+		}
+		return moves;
+	}
+	private ArrayList<String> queenMoves(int x, int y, String player) {
+		ArrayList<String> moves = new ArrayList<String>();
+		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
+		for(String dir : directions) {
+			boolean obstruction = false;
+			int len = dir.length();
+			char first = dir.charAt(0);
+			char second = 'z';
+			if(len==2) {	
+				second = dir.charAt(1);
+			}
+			int nx = x;
+			int ny = y;
+			while(!obstruction) {
+				
+				if(first == 'N')
+					nx +=1;
+				if(first == 'S')
+					nx -=1;
+				if(first == 'E') 
+					ny +=1;
+				if(first == 'W')
+					ny -=1;
+				if(second!='z') {
+					if(second =='E')
+						ny +=1;
+					if(second =='W')
+						ny +=1;
+				}
+				if(nx>=size || ny>=size ||nx<0 || ny<0)
+					obstruction = true;
+				else if(matrix[nx][ny].equals(".")) {
+					moves.add(player+"-"+(x+1)+"-"+(y+1)+"-"+(nx+1)+"-"+(ny+1)+"-");
+				}
+				else {
+					obstruction = true;
+				}
+				
+				
+			}
+		}
 		return moves;
 	}
 	
 	public boolean validateMove(String move) {
 		boolean valid = false;
-		ArrayList<String> validmoves = getValidMoves();
+		String turn = move.substring(0, 1);
+		ArrayList<String> validmoves = getValidMoves(turn);
 //		for(int i =0; i<validmoves.size();i++) {
 //			//if(move.equals(validmoves.get(i))) {
 //				valid = true;
@@ -60,15 +116,19 @@ public class Board extends JPanel{
 	}
 	private void move(String move) {
 		String[] split = move.split("-");
-		for(int i = 0;i<split.length;i++) {
-			System.out.print(split[i]+" ");
-		}
-		matrix[Integer.parseInt(split[1])+1][Integer.parseInt(split[2])+1] = ".";
-		if(split[0].equalsIgnoreCase("W")) 
-			matrix[Integer.parseInt(split[3])+1][Integer.parseInt(split[4])+1] = "W";
+		String turn = split[0];
+		int pqy = Integer.parseInt(split[1])-1;
+		int pqx = Integer.parseInt(split[2])-1;
+		int qy = Integer.parseInt(split[3])-1;
+		int qx = Integer.parseInt(split[4])-1;
+		int ay = Integer.parseInt(split[5])-1;
+		int ax = Integer.parseInt(split[6])-1;
+		matrix[pqx][pqy] = ".";
+		if(turn.equalsIgnoreCase("W")) 
+			matrix[qx][qy] = "W";
 		else
-			matrix[Integer.parseInt(split[3])+1][Integer.parseInt(split[4])+1] = "B";
-		matrix[Integer.parseInt(split[5])+1][Integer.parseInt(split[6])+1] = "x";
+			matrix[qx][qy] = "B";
+		matrix[ax][ay] = "x";
 		repaint();
 	}
 	

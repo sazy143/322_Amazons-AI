@@ -24,22 +24,23 @@ public class Game {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		Game game = new Game("test","test");
-		String move = null;
-		boolean check;
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		while(true) {
-			check = false;
-			try{
-				  move = in.readLine();
-			  }catch(IOException e){
-				 System.out.println(e);
-			  }
-			if(move.equals("x")){
-				break;
-			}
-			game.makemove(move);
-			System.out.println(game.board.toString());
-		}
+		game.board.getValidMoves("W");
+//		String move = null;
+//		boolean check;
+//		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+//		while(true) {
+//			check = false;
+//			try{
+//				  move = in.readLine();
+//			  }catch(IOException e){
+//				 System.out.println(e);
+//			  }
+//			if(move.equals("x")){
+//				break;
+//			}
+//			game.makemove(move);
+//			System.out.println(game.board.toString());
+//		}
 		
 		
 	}
