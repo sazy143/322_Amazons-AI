@@ -15,12 +15,17 @@ import javax.swing.JPanel;
 import cosc322.Amazons.BoardGameModel;
 
 public class Board extends JPanel{
+	//class variables
+	//can change board size with size
 	int size = 10;
 	int GUISize = 600;
+	//the positions of our queens(not used for anything right now);
 	int[] Queensx = {0,0,3,3,6,6,9,9};
 	int[] Queensy = {3,6,0,9,0,9,3,6};
+	//define board size
 	String[][] matrix = new String[size][size];
 	
+	//initialize our board and starting queen positions
 	public Board() {
 		
 		for(int i = 0; i<size; i++) {
@@ -38,11 +43,12 @@ public class Board extends JPanel{
 		matrix[9][3] = "B";
 		matrix[9][6] = "B";
 	}
+	//Will return an array list of all valid moves for whoever the player is either "B" or "W"
 	public ArrayList<String> getValidMoves(String player){
-		//player boolean is for whose turn it is true=white, false=black
+		//two array list one to get valid queen moves the other to store valid arrow shots from each queen
 		ArrayList<String> moves = new ArrayList<String>();
 		ArrayList<String> qMoves = new ArrayList<String>();
-		
+		//search the board for all our queen positions, get their moves and put all moves into qMoves
 		for(int i = 0; i<size; i++) {
 			for(int j = 0; j<size; j++	) {
 				if(matrix[i][j].equalsIgnoreCase(player)) {
@@ -50,20 +56,25 @@ public class Board extends JPanel{
 				}
 			}
 		}
+		//for every potential queen move find where they can shoot their arrow, and add it to moves
 		for(String move : qMoves) {
 			moves.addAll(arrows(move));
 			
 		}
-		System.out.println(player+" has "+moves.size()+" potential moves!");
+		//list how many potential moves the player has/had
+		System.out.println(player+" had "+moves.size()+" potential moves!");
 		return moves;
 	}
-	
+	//Method to find valid arrow moves takes in valid queen move returns viable move
 	private ArrayList<String> arrows(String qMove){
+		//array to store this queens valid arrows
 		ArrayList<String> aMoves = new ArrayList<String>();
+		//get the queens new position
 		String str = qMove.toString();
 		String[] parsed = str.split("-");
 		int qx = Integer.parseInt(parsed[3]);
 		int qy = Integer.parseInt(parsed[4]);
+		//let us search all 8 directions until collision or not on board
 		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
 		for(String dir : directions) {
 			boolean obstruction = false;
@@ -91,12 +102,15 @@ public class Board extends JPanel{
 					if(second =='W')
 						ny -=1;
 				}
+				//out of board space ie. obstruction
 				if(nx>=size || ny>=size ||nx<0 || ny<0)
 					obstruction = true;
+				//its a free spoot there for a valid move
 				else if(matrix[nx][ny].equals(".")) {
 					
 					aMoves.add(new String(qMove+(nx+"-"+ny)));
 				}
+				//otherwise it hit an object
 				else {
 					obstruction = true;
 				}
@@ -107,9 +121,11 @@ public class Board extends JPanel{
 		
 		return aMoves;
 	}
-	
+	//Method to find viable queen moves takes in that queens starting point, and their color returns that queens move set
 	private ArrayList<String> queenMoves(int x, int y, String player) {
+		//array to store the viable moves
 		ArrayList<String> moves = new ArrayList<String>();
+		//search all 8 directions for viable queen moves
 		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
 		for(String dir : directions) {
 			boolean obstruction = false;
@@ -137,12 +153,14 @@ public class Board extends JPanel{
 					if(second =='W')
 						ny -=1;
 				}
+				//out of board space ie. obstruction
 				if(nx>=size || ny>=size ||nx<0 || ny<0)
 					obstruction = true;
+				//open board spot there for viable move
 				else if(matrix[nx][ny].equals(".")) {
-					
 					moves.add(new String(player+"-"+(x+1)+"-"+(y+1)+"-"+(nx+1)+"-"+(ny+1)+"-"));
 				}
+				//otherwise hit an obstruction
 				else {
 					obstruction = true;
 				}
@@ -152,7 +170,7 @@ public class Board extends JPanel{
 		}
 		return moves;
 	}
-	
+	//This validates a player move by checking their input against all possible moves
 	public boolean validateMove(String move) {
 		boolean valid = false;
 		String turn = move.substring(0, 1);
@@ -168,6 +186,7 @@ public class Board extends JPanel{
 		
 		return valid;
 	}
+	//This actually moves the piece on the board
 	private void move(String move) {
 		String[] split = move.split("-");
 		String turn = split[0];
@@ -185,7 +204,7 @@ public class Board extends JPanel{
 		matrix[ax][ay] = "x";
 		repaint();
 	}
-	
+	//Draw out board make it pretty and what not
 	protected void paintComponent(Graphics g) {
 		int offset = 25;
 		int posize = 50;
@@ -234,10 +253,11 @@ public class Board extends JPanel{
 		}
 	    
 	}
+	//Dim override
 	public Dimension getPreferredSize() {
 	    return new Dimension(500,500);
      }
-	
+	//Give a basic console view of the board if GUI does not work
 	public String toString() {
 		String b = "";
 		for(int i = 0; i<size; i++) {

@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 
 //move format
 //W-10-10-5-5-7-7
-//player-queenx-queeny-newqueenx-newqueeny-arrowx-arrowy
+//player-currentqueenx-currentqueeny-newqueenx-newqueeny-arrowx-arrowy
 
 public class Game {
 	Board board;
@@ -28,6 +28,7 @@ public class Game {
 		
 		String move = null;
 		boolean check;
+		//This will let a user input values
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		while(true) {
 			check = false;
@@ -39,6 +40,7 @@ public class Game {
 			if(move.equals("x")){
 				break;
 			}
+			//tells the game class to make the move
 			game.makemove(move);
 			System.out.println(game.board.toString());
 		}
@@ -52,7 +54,7 @@ public class Game {
 		setupGUI();       
 	    //connectToServer(name, passwd);        
 	    }
-	
+	//checks with the board whether you made a valid move 
 	public void makemove(String move) {
 		boolean check;
 		check = this.board.validateMove(move);
@@ -62,6 +64,7 @@ public class Game {
 			System.out.println("invalid move made");
 		}
 	}
+	//GUI Stuff
 	public void setupGUI() {
 		guiFrame = new JFrame();
 		   
