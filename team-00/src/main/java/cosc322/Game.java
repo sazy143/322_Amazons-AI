@@ -25,6 +25,8 @@ public class Game {
 		// TODO Auto-generated method stub
 		Game game = new Game("test","test");
 		game.board.getValidMoves("W");
+		
+		
 //		String move = null;
 //		boolean check;
 //		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

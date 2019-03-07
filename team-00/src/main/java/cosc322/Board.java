@@ -51,10 +51,63 @@ public class Board extends JPanel{
 			}
 		}
 		for(String move : qMoves) {
-			System.out.println(move);
+			moves.addAll(arrows(move));
+			
 		}
+		System.out.println("White has "+moves.size()+" moves");
 		return moves;
 	}
+	
+	private ArrayList<String> arrows(String qMove){
+		ArrayList<String> aMoves = new ArrayList<String>();
+		String str = qMove.toString();
+		String[] parsed = str.split("-");
+		int qx = Integer.parseInt(parsed[3]);
+		int qy = Integer.parseInt(parsed[4]);
+		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
+		for(String dir : directions) {
+			boolean obstruction = false;
+			int len = dir.length();
+			char first = dir.charAt(0);
+			char second = 'z';
+			if(len==2) {	
+				second = dir.charAt(1);
+			}
+			int nx = qx;
+			int ny = qy;
+			while(!obstruction) {
+				
+				if(first == 'N')
+					nx +=1;
+				if(first == 'S')
+					nx -=1;
+				if(first == 'E') 
+					ny +=1;
+				if(first == 'W')
+					ny -=1;
+				if(second!='z') {
+					if(second =='E')
+						ny +=1;
+					if(second =='W')
+						ny +=1;
+				}
+				if(nx>=size || ny>=size ||nx<0 || ny<0)
+					obstruction = true;
+				else if(matrix[nx][ny].equals(".")) {
+					
+					aMoves.add(new String(qMove+(nx+"-"+ny)));
+				}
+				else {
+					obstruction = true;
+				}
+				
+				
+			}
+		}
+		
+		return aMoves;
+	}
+	
 	private ArrayList<String> queenMoves(int x, int y, String player) {
 		ArrayList<String> moves = new ArrayList<String>();
 		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
@@ -87,7 +140,8 @@ public class Board extends JPanel{
 				if(nx>=size || ny>=size ||nx<0 || ny<0)
 					obstruction = true;
 				else if(matrix[nx][ny].equals(".")) {
-					moves.add(player+"-"+(x+1)+"-"+(y+1)+"-"+(nx+1)+"-"+(ny+1)+"-");
+					
+					moves.add(new String(player+"-"+(x+1)+"-"+(y+1)+"-"+(nx+1)+"-"+(ny+1)+"-"));
 				}
 				else {
 					obstruction = true;
