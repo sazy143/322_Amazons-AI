@@ -54,7 +54,7 @@ public class Board extends JPanel{
 			moves.addAll(arrows(move));
 			
 		}
-		System.out.println("White has "+moves.size()+" moves");
+		System.out.println(player+" has "+moves.size()+" potential moves!");
 		return moves;
 	}
 	
@@ -78,9 +78,9 @@ public class Board extends JPanel{
 			while(!obstruction) {
 				
 				if(first == 'N')
-					nx +=1;
-				if(first == 'S')
 					nx -=1;
+				if(first == 'S')
+					nx +=1;
 				if(first == 'E') 
 					ny +=1;
 				if(first == 'W')
@@ -89,7 +89,7 @@ public class Board extends JPanel{
 					if(second =='E')
 						ny +=1;
 					if(second =='W')
-						ny +=1;
+						ny -=1;
 				}
 				if(nx>=size || ny>=size ||nx<0 || ny<0)
 					obstruction = true;
@@ -124,9 +124,9 @@ public class Board extends JPanel{
 			while(!obstruction) {
 				
 				if(first == 'N')
-					nx +=1;
-				if(first == 'S')
 					nx -=1;
+				if(first == 'S')
+					nx +=1;
 				if(first == 'E') 
 					ny +=1;
 				if(first == 'W')
@@ -135,7 +135,7 @@ public class Board extends JPanel{
 					if(second =='E')
 						ny +=1;
 					if(second =='W')
-						ny +=1;
+						ny -=1;
 				}
 				if(nx>=size || ny>=size ||nx<0 || ny<0)
 					obstruction = true;
@@ -157,16 +157,16 @@ public class Board extends JPanel{
 		boolean valid = false;
 		String turn = move.substring(0, 1);
 		ArrayList<String> validmoves = getValidMoves(turn);
-//		for(int i =0; i<validmoves.size();i++) {
-//			//if(move.equals(validmoves.get(i))) {
-//				valid = true;
-//				move(move);
-//				break;
-//			}
-		move(move);
+		for(int i =0; i<validmoves.size();i++) {
+			if(move.equals(validmoves.get(i))) {
+				valid = true;
+				move(move);
+				break;
+			}
+				
+		}
 		
-		
-		return true;
+		return valid;
 	}
 	private void move(String move) {
 		String[] split = move.split("-");
