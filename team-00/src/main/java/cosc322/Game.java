@@ -1,67 +1,96 @@
 package cosc322;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
-
+import java.util.ArrayList;
 import javax.swing.Box;
 import javax.swing.JFrame;
 
+import ygraphs.ai.smart_fox.games.GameClient;
+
 //move format
-//W-10-10-5-5-7-7
-//player-currentqueenx-currentqueeny-newqueenx-newqueeny-arrowx-arrowy
+//W-10-10-5-5-7-7 W or B is done for you by the game
+//currentqueenx-currentqueeny-newqueenx-newqueeny-arrowx-arrowy
+
 
 public class Game {
 	Board board;
 	JFrame guiFrame;
 	String name;
+	private GameClient gameClient;
+	String turn;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		//create our game
 		Game game = new Game("test","test");
-		
-		
-		String move = null;
-		boolean check;
-		//This will let a user input values
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		//create our players
+		PlayerHuman p1 = new PlayerHuman("B");
+		PlayerHuman p2 = new PlayerHuman("W");
+		//run the game
 		while(true) {
-			check = false;
-			try{
-				  move = in.readLine();
-			  }catch(IOException e){
-				 System.out.println(e);
-			  }
-			if(move.equals("x")){
-				break;
+			String turn = game.turn;
+			String move = null;
+			boolean valid = false;
+			System.out.println("Its player "+turn+" turn!");
+			while(!valid) {
+				if(turn.equals(p1.getColor())) {
+					move = p1.move();
+					System.out.println(move);
+				}
+				else {
+					move = p2.move();
+					System.out.println(move);
+				}
+				valid = game.makemove(move);
 			}
-			//tells the game class to make the move
-			game.makemove(move);
-			System.out.println(game.board.toString());
+			game.nextTurn();
+			//System.out.println(game.board.toString());
 		}
+		
 		
 		
 	}
 	
 	public Game(String name, String passwd){  
-			
+		if(System.currentTimeMillis()%2==0)
+			this.turn="W";
+		else
+			this.turn="B";
 		this.name = name;		       	   
 		setupGUI();       
 	    //connectToServer(name, passwd);        
 	    }
+	
+	public void connectToServer(String name, String password) {
+		
+		gameClient = new GameClient(name, password);
+	}
+	
+	public void onLogin() {
+
+		//once logged in, the gameClient will have  the names of available game rooms  
+		ArrayList<String> rooms = gameClient.getRoomList();
+		this.gameClient.joinRoom(rooms.get(0));	 		
+	    }
+	
 	//checks with the board whether you made a valid move 
-	public void makemove(String move) {
+	public boolean makemove(String move) {
 		boolean check;
 		check = this.board.validateMove(move);
 		if(check) {
 			System.out.println("valid move made");
 		}else {
 			System.out.println("invalid move made");
+		}
+		return check;
+	}
+	
+	//switch turn
+	public void nextTurn() {
+		if(turn.equals("W")) {
+			turn = "B";
+		}else {
+			turn = "W";
 		}
 	}
 	//GUI Stuff

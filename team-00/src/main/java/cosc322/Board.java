@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
@@ -12,8 +11,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-import cosc322.Amazons.BoardGameModel;
 
+@SuppressWarnings("serial")
 public class Board extends JPanel{
 	//class variables
 	//can change board size with size
@@ -52,7 +51,7 @@ public class Board extends JPanel{
 		for(int i = 0; i<size; i++) {
 			for(int j = 0; j<size; j++	) {
 				if(matrix[i][j].equalsIgnoreCase(player)) {
-					qMoves.addAll(queenMoves(i, j, player));
+					qMoves.addAll(queenMoves(j, i, player));
 				}
 			}
 		}
@@ -61,6 +60,9 @@ public class Board extends JPanel{
 			moves.addAll(arrows(move));
 			
 		}
+//		for(int i = 0; i<25; i++) {
+//			System.out.println(moves.get(i));
+//		}
 		//list how many potential moves the player has/had
 		System.out.println(player+" had "+moves.size()+" potential moves!");
 		return moves;
