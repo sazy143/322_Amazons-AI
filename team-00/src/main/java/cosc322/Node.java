@@ -16,6 +16,7 @@ public class Node {
 	Node(Board b, String color, Node parent){
 		this.state = b.getState();
 		this.color = color;
+		this.parent = parent;
 		
 	}
 	//If this node is a leaf this will generate all the children

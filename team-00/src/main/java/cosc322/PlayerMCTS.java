@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 public class PlayerMCTS {
 //lots to do here lol
-	String color;
+	
 	Node root;
-	PlayerMCTS(String color){
-		this.color = color;
-		root = new Node(new Board(),color,null);
+	PlayerMCTS(){
+		root = new Node(new Board(),"W",null);
 		
 	}
 	
