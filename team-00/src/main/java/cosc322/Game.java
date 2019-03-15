@@ -12,6 +12,7 @@ import ygraphs.ai.smart_fox.games.GameClient;
 //W-10-10-5-5-7-7 W or B is done for you by the game	
 //currentqueenx-currentqueeny-newqueenx-newqueeny-arrowx-arrowy
 
+//We need to find a way to end game if there are no moves
 
 public class Game {
 	Board board;

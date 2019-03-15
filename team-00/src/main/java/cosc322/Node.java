@@ -19,7 +19,7 @@ public class Node {
 		
 	}
 	//If this node is a leaf this will generate all the children
-	public ArrayList<Node> createChildren(){
+	public void createChildren(){
 		ArrayList<Node> children = new ArrayList<>();
 		Board b = new Board(state);
 		String nc;
@@ -38,7 +38,7 @@ public class Node {
 			children.add(new Node(boards.get(i),nc,this));
 		}
 		
-		return children;
+		this.children = children;
 	}
 	
 	public ArrayList<Node> getChildren(){
