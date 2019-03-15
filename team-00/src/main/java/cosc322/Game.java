@@ -18,7 +18,7 @@ public class Game {
 	JFrame guiFrame;
 	String name;
 	private GameClient gameClient;
-	String turn;
+	String turn = "W";
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//create our game
@@ -52,10 +52,7 @@ public class Game {
 	}
 	
 	public Game(String name, String passwd){  
-		if(System.currentTimeMillis()%2==0)
-			this.turn="W";
-		else
-			this.turn="B";
+		
 		this.name = name;		       	   
 		setupGUI();       
 	    //connectToServer(name, passwd);        
