@@ -9,12 +9,12 @@ String color;
 	}
 	
 	public String move() {
-		String m = null;
+		String m = "";
 		Scanner in = new Scanner(System.in);
 		System.out.println("What is your move format('qx-qy-nqx-nqy-ax-ay'?)");
-		m = in.nextLine();
+		m = in.next();
 		m = this.color+"-"+m;
-		in.close();
+		//in.close();
 		return m;
 	}
 	

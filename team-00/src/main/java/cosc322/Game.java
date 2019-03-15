@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import ygraphs.ai.smart_fox.games.GameClient;
 
 //move format
-//W-10-10-5-5-7-7 W or B is done for you by the game
+//W-10-10-5-5-7-7 W or B is done for you by the game	
 //currentqueenx-currentqueeny-newqueenx-newqueeny-arrowx-arrowy
 
 

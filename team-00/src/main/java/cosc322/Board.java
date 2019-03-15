@@ -42,6 +42,13 @@ public class Board extends JPanel{
 		matrix[9][3] = "B";
 		matrix[9][6] = "B";
 	}
+	public Board(String[][] m) {
+		for(int i =0;i<size;i++) {
+			for(int j = 0;j<size;j++) {
+				matrix[i][j]=m[i][j];
+			}
+		}
+	}
 	//Will return an array list of all valid moves for whoever the player is either "B" or "W"
 	public ArrayList<String> getValidMoves(String player){
 		//two array list one to get valid queen moves the other to store valid arrow shots from each queen
@@ -189,7 +196,7 @@ public class Board extends JPanel{
 		return valid;
 	}
 	//This actually moves the piece on the board
-	private void move(String move) {
+	public void move(String move) {
 		String[] split = move.split("-");
 		String turn = split[0];
 		int pqy = Integer.parseInt(split[1])-1;
@@ -205,6 +212,10 @@ public class Board extends JPanel{
 			matrix[qx][qy] = "B";
 		matrix[ax][ay] = "x";
 		repaint();
+	}
+	//get state
+	public String[][] getState(){
+		return matrix;
 	}
 	//Draw out board make it pretty and what not
 	protected void paintComponent(Graphics g) {
