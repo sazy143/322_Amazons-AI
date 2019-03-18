@@ -67,9 +67,9 @@ public class Board extends JPanel{
 			moves.addAll(arrows(move));
 			
 		}
-//		for(int i = 0; i<25; i++) {
-//			System.out.println(moves.get(i));
-//		}
+		for(int i = 0; i<moves.size(); i++) {
+			System.out.println(moves.get(i));
+		}
 		//list how many potential moves the player has/had
 		System.out.println(player+" had "+moves.size()+" potential moves!");
 		return moves;
@@ -93,8 +93,8 @@ public class Board extends JPanel{
 			if(len==2) {	
 				second = dir.charAt(1);
 			}
-			int nx = qx;
-			int ny = qy;
+			int nx = qx-1;
+			int ny = qy-1;
 			while(!obstruction) {
 				
 				if(first == 'N')
@@ -111,13 +111,14 @@ public class Board extends JPanel{
 					if(second =='W')
 						ny -=1;
 				}
+				
 				//out of board space ie. obstruction
 				if(nx>=size || ny>=size ||nx<0 || ny<0)
 					obstruction = true;
 				//its a free spoot there for a valid move
 				else if(matrix[nx][ny].equals(".")) {
 					
-					aMoves.add(new String(qMove+(nx+"-"+ny)));
+					aMoves.add(new String(qMove+((nx+1)+"-"+(ny+1))));
 				}
 				//otherwise it hit an object
 				else {
