@@ -1,6 +1,9 @@
 package cosc322;
 
 import java.util.ArrayList;
+import java.util.Timer;
+
+import org.jdom.Parent;
 
 public class PlayerMCTS {
 //lots to do here lol
@@ -31,15 +34,29 @@ public class PlayerMCTS {
 		}
 		return leaf;
 	}
-	
-	public void expand(Node leaf) {
+
+	public Node expand(Node leaf) {
 		leaf.createChildren();
 		boolean gameEnd = false;
 		ArrayList<Node> children = leaf.getChildren();
 		if(children.size()==0) {
+			// figure out how to end game properly
 			gameEnd = true;
+			return leaf;
 		}
-		
+		else {
+			
+			return children.get((int)Math.random()*children.size());
+			/*
+			int size = children.size();
+			double maxnode=0;
+			for(int i=0;i<children.size();i++) {
+				if(maxnode<children.get(i).getScore()) {
+					maxnode=children.get(i).getScore();
+				}
+			}
+			*/		
+		}
 		
 	}
 	
