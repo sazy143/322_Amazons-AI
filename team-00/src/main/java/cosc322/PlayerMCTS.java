@@ -1,5 +1,11 @@
 package cosc322;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Timer;
 import org.jdom.Parent;
@@ -51,7 +57,7 @@ public class PlayerMCTS {
 		}
 		// otherwise explore random child
 		else {
-			return children.get((int)Math.random()*children.size());		
+			return children.get((int) (Math.random()*children.size()));		
 		}
 		
 	}
@@ -88,9 +94,27 @@ public class PlayerMCTS {
 		return no;
 	}
 	
-	// update to file about every 20-30 times
-	public void updatetofile() {
-		
+	public void updatetofile(Node name) {
+		// update to file about every 20-30 times
+		// if statement might be more useful to be better in a seperate section, so this method isn't being called everytime
+		if(name.plays%25==0) {
+			// make objectoutputstream to write to file using try/catch
+			// may be missing some catch statements
+			try {
+				OutputStream file = new FileOutputStream("AmazonsMem.Ser");
+				OutputStream buffer = new BufferedOutputStream (file);
+				ObjectOutput output = new ObjectOutputStream(buffer);
+				try {
+					output.writeObject(name);
+				}
+				finally {
+					output.close();
+				}
+			}
+			catch(IOException e){
+				System.out.println("IOException error");
+			}
+		}
 	}
 	
 
