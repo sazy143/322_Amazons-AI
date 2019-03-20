@@ -7,7 +7,6 @@ import org.jdom.Parent;
 
 public class PlayerMCTS {
 //lots to do here lol
-	
 	Node root;
 	PlayerMCTS(){
 		root = new Node(new Board(),"W",null);
@@ -36,7 +35,7 @@ public class PlayerMCTS {
 	}
 
 	public Node expand(Node leaf) {
-		//leaf.createChildren();
+		leaf.createChildren();
 		boolean gameEnd = false;
 		ArrayList<Node> children = leaf.getChildren();
 		if(children.size()==0) {
@@ -46,33 +45,24 @@ public class PlayerMCTS {
 		}
 		else {
 			
-			return children.get((int)Math.random()*children.size());
-			/*
-			//bad code
-			int size = children.size();
-			double maxnode=0;
-			for(int i=0;i<children.size();i++) {
-				if(maxnode<children.get(i).getScore()) {
-					maxnode=children.get(i).getScore();
-				}
-			}
-			*/		
+			return children.get((int)Math.random()*children.size());		
 		}
 		
 	}
-	public Node simulate(Node sim) {
-		//check if this node sim has wins return sims
-		if(sim.wins>0) {
-			return sim;
-		}
-		//look again for a winning move
-		else {
-			return simulate(expand(sim.parent));
-		}
+	
+	public void simulate() {
+		
 	}
 	
-	// update info
 	public void backprop() {
+		
+	}
+	
+	public void recursive() {
+		
+	}
+	
+	public void getvalue() {
 		
 	}
 	
