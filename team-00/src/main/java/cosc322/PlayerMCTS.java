@@ -36,7 +36,7 @@ public class PlayerMCTS {
 	}
 
 	public Node expand(Node leaf) {
-		leaf.createChildren();
+		//leaf.createChildren();
 		boolean gameEnd = false;
 		ArrayList<Node> children = leaf.getChildren();
 		if(children.size()==0) {
@@ -48,6 +48,7 @@ public class PlayerMCTS {
 			
 			return children.get((int)Math.random()*children.size());
 			/*
+			//bad code
 			int size = children.size();
 			double maxnode=0;
 			for(int i=0;i<children.size();i++) {
@@ -59,11 +60,18 @@ public class PlayerMCTS {
 		}
 		
 	}
-	
-	public void simulate() {
-		
+	public Node simulate(Node sim) {
+		//check if this node sim has wins return sims
+		if(sim.wins>0) {
+			return sim;
+		}
+		//look again for a winning move
+		else {
+			return simulate(expand(sim.parent));
+		}
 	}
 	
+	// update info
 	public void backprop() {
 		
 	}
