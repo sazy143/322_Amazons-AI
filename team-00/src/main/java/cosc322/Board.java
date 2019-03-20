@@ -67,9 +67,9 @@ public class Board extends JPanel{
 			moves.addAll(arrows(move));
 			
 		}
-		for(int i = 0; i<moves.size(); i++) {
-			System.out.println(moves.get(i));
-		}
+//		for(int i = 0; i<moves.size(); i++) {
+//			System.out.println(moves.get(i));
+//		}
 		//list how many potential moves the player has/had
 		System.out.println(player+" had "+moves.size()+" potential moves!");
 		return moves;
