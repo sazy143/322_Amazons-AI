@@ -61,7 +61,7 @@ public class PlayerMCTS {
 	}
 	
 	public Node simulate(Node sim) {
-		//check if this sim has wins return sims
+		//check if this sim has wins return sim
 		if(sim.wins>0) {
 			return sim;
 		}
