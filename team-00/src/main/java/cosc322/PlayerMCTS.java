@@ -7,10 +7,9 @@ import org.jdom.Parent;
 
 public class PlayerMCTS {
 //lots to do here lol
-<<<<<<< HEAD
-=======
-//test
->>>>>>> origin/algorithm_implementation
+
+
+
 	Node root;
 	PlayerMCTS(){
 		root = new Node(new Board(),"W",null);
@@ -55,23 +54,19 @@ public class PlayerMCTS {
 	}
 	
 	public Node simulate(Node sim) {
-<<<<<<< HEAD
+
 		//check if this sim has wins return sims
-=======
+
 		//check if this sim has wins return sim
->>>>>>> origin/algorithm_implementation
+
 		if(sim.wins>0) {
 			return sim;
 		}
 		//look again for a winning move
 		else {
 			return simulate(expand(sim.parent));
-<<<<<<< HEAD
 		}
-		
-=======
-		}	
->>>>>>> origin/algorithm_implementation
+
 	}
 	
 	public double backprop(Node no) {
@@ -86,7 +81,6 @@ public class PlayerMCTS {
 		
 	}
 	
-<<<<<<< HEAD
 	public void recursive() {
 		
 	}
@@ -94,9 +88,6 @@ public class PlayerMCTS {
 	public void getvalue() {
 		
 	}
-	
-=======
 
->>>>>>> origin/algorithm_implementation
 }
 
