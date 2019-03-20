@@ -50,7 +50,15 @@ public class PlayerMCTS {
 		
 	}
 	
-	public void simulate() {
+	public Node simulate(Node sim) {
+		//check if this sim has wins return sims
+		if(sim.wins>0) {
+			return sim;
+		}
+		//look again for a winning move
+		else {
+			return simulate(expand(sim.parent));
+		}
 		
 	}
 	
