@@ -60,13 +60,29 @@ public class PlayerMCTS {
 		
 	}
 	
-	public void simulate() {
+	public Node simulate(Node sim) {
+		//check if this sim has wins return sims
+		if(sim.wins>0) {
+			return sim;
+		}
+		//look again for a winning move
+		else {
+			return simulate(expand(sim.parent));
+		}	
+	}
+	
+	public double backprop(Node no) {
+		//update amount of plays of game
+		no.plays=no.plays+1;
+		//return score from leaf node;
+		return no.getScore();
+	}
+	
+	//if not root, parents update first
+	public void updaterecursive() {
 		
 	}
 	
-	public void backprop() {
-		
-	}
-	
+
 }
 
