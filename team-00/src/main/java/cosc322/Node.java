@@ -33,7 +33,7 @@ public class Node implements Serializable{
 		ArrayList<String> childrenMoves = b.getValidMoves(nc);
 		ArrayList<Board> boards = new ArrayList<Board>();
 		for(int i =0;i<childrenMoves.size();i++) {
-			Board cb = b;
+			Board cb = new Board(b.getState());
 			cb.move(childrenMoves.get(i));
 			boards.add(cb);
 		}

@@ -28,10 +28,10 @@ public class PlayerMCTS{
 		Node max = null;
 		double maxs = Integer.MIN_VALUE;
 		if(current.isLeaf) {
-			System.out.println("test");
+			
 			return current;
 		}else {
-			System.out.println("test2");
+			
 			children = current.getChildren();
 //			max = children.get((int) (Math.random()*children.size()));
 			for(Node child : children) {
@@ -40,7 +40,7 @@ public class PlayerMCTS{
 					maxs = child.getScore();
 				}
 			}
-			select(max);
+			leaf = select(max);
 		}
 			
 		
@@ -48,35 +48,42 @@ public class PlayerMCTS{
 	}
 
 	public Node expand(Node leaf) {
-		leaf.createChildren();
-		//boolean for now to end game: fix
-		boolean gameEnd = false;
+		System.out.println(leaf.color);
+		if(leaf.isLeaf) {
+			leaf.createChildren();
+			
+		}
+		
 		//store children of node in arraylist
 		ArrayList<Node> children = leaf.getChildren();
-		//if no children, end game
-		if(children.size()==0) {
-			// figure out how to end game properly
-			gameEnd = true;
-			//return itself if empty
-			return leaf;
+		
+		//if children is null then it is a leaf node
+		if(children==null||children.size()==0) {
+				System.out.println("bottom of the tree");
+				//This node is the bottom of the tree
+				return leaf;
+			
 		}
 		// otherwise explore random child
 		else {
+			//System.out.println("random child");
 			return children.get((int) (Math.random()*children.size()));		
 		}
 		
 	}
 	
 	public Node simulate(Node sim) {
-		
-		sim.parent.isLeaf = false;
+		if(sim.parent!= null) 
+			sim.parent.isLeaf = false;
 		sim.createChildren();
 		ArrayList<Node> children = sim.getChildren();
 		if(children.size()==0) {
+			System.out.println("no children");
 			return sim;
 		}else {
+			//System.out.println("sim rand");
 			Node rand = children.get((int) (Math.random()*children.size()));
-			simulate(rand);
+			sim = simulate(rand);
 		}
 			
 		/* moved to backprop

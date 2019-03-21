@@ -49,6 +49,7 @@ public class Board extends JPanel{
 			}
 		}
 	}
+	
 	//Will return an array list of all valid moves for whoever the player is either "B" or "W"
 	public ArrayList<String> getValidMoves(String player){
 		//two array list one to get valid queen moves the other to store valid arrow shots from each queen

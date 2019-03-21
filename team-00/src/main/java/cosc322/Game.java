@@ -62,19 +62,21 @@ public class Game {
 		PlayerMCTS train = new PlayerMCTS();
 		Node root = train.root;
 		while(true) {
-			System.out.println("checkpoint1");
+			
 			Node sel = train.select(root);
-			System.out.println("checkpoint2");
+			
 			Node exp = train.expand(sel);
-			System.out.println("checkpoint3");
+			
 			Node sim = train.simulate(exp);
-			System.out.println("checkpoint4");
+			
 			train.backprop(sim);
 			System.out.println("completed a simulation");
 			System.out.println("plays:"+train.root.plays+" wins:"+train.root.wins);
 			if(train.root.plays%30==0) {
 				train.updatetofile(train.root);
 			}
+			
+			System.out.println(root.getChildren().size());
 			
 		}
 		
