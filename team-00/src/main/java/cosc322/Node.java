@@ -51,7 +51,12 @@ public class Node implements Serializable{
 		return parent;
 	}
 	public double getScore() {
-		return (wins/plays)+econst*Math.sqrt(Math.log(plays)/plays);
+		if(wins==0&&plays==0) {
+			return 0;
+		}
+		else {
+			return (wins/plays)+econst*Math.sqrt(Math.log(plays)/plays);
+		}
 	}
 
 }

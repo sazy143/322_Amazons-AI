@@ -18,8 +18,8 @@ public class PlayerMCTS{
 
 	Node root;
 	PlayerMCTS(){
+		//black always starts first
 		root = new Node(new Board(),"B",null,null);
-		
 	}
 	
 	public Node select(Node current) {
@@ -28,16 +28,18 @@ public class PlayerMCTS{
 		Node max = null;
 		double maxs = Integer.MIN_VALUE;
 		if(current.isLeaf) {
+			System.out.println("test");
 			return current;
 		}else {
+			System.out.println("test2");
 			children = current.getChildren();
-			max = children.get((int) (Math.random()*children.size()));
-//			for(Node child : children) {
-//				if(child.getScore()>maxs) {
-//					max = child;
-//					maxs = child.getScore();
-//				}
-//			}
+//			max = children.get((int) (Math.random()*children.size()));
+			for(Node child : children) {
+				if(child.getScore()>maxs) {
+					max = child;
+					maxs = child.getScore();
+				}
+			}
 			select(max);
 		}
 			
