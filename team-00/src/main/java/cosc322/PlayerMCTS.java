@@ -72,26 +72,45 @@ public class PlayerMCTS {
 			sim=expand(sim);
 			
 		}
-		
+		/* moved to backprop
 		//current color doesn't match top of color, count as winner
 		if(sim.color!=color2) {
 			sim.wins=sim.wins+1;
 		}
-		
 		//update plays
 		sim.plays=sim.plays+1;
+		*/
 		
 		//return bottom node
 		return sim;
 	}
 	
-	public  Node backprop(Node no) {
+	public void backprop(Node no) {
+		
+		// boolean to keep tracking of winning/losing nodes
+		boolean winlose = false;
 		//check if has parent, then child=parent
 		while(no.parent!=null) {
+			//update plays
+			no.plays=no.plays+1;
+			
+			//bottom node is a loser
+			if(winlose=false) {
+			winlose=true;
+			
+			}
+			// tops above bottom and alternating are winners
+			else {
+			winlose=false;	
+			//update wins
+			no.wins=no.wins+1;
+			}
+			
+			//move up each node while updating
 			no=no.parent;
 		}
-		// return top node
-		return no;
+		
+		
 	}
 	
 	public void updatetofile(Node name) {
