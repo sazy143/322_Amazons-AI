@@ -1,14 +1,21 @@
 package cosc322;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.zip.GZIPOutputStream;
+
 import org.jdom.Parent;
 
 public class PlayerMCTS{
@@ -19,6 +26,19 @@ public class PlayerMCTS{
 	Node root;
 	PlayerMCTS(){
 		//black always starts first
+//		try {
+//			InputStream file = new FileInputStream("AmazonsMem.ser");
+//			InputStream buffer = new BufferedInputStream(file);
+//			ObjectInput input = new ObjectInputStream (buffer);
+//			root = (Node)input.readObject();
+//			System.out.println("Root node/tree loaded");
+//			input.close();
+//		}
+//		catch(Exception e){
+//			System.out.println("No file found run as normal");
+//			//e.printStackTrace();
+//			root = new Node(new Board(),"B",null,null);
+//		}
 		root = new Node(new Board(),"B",null,null);
 	}
 	
@@ -27,6 +47,7 @@ public class PlayerMCTS{
 		Node leaf = null;
 		Node max = null;
 		double maxs = Integer.MIN_VALUE;
+		double tooStrong = 2;
 		if(current.isLeaf) {
 			
 			return current;
@@ -34,13 +55,23 @@ public class PlayerMCTS{
 			
 			children = current.getChildren();
 //			max = children.get((int) (Math.random()*children.size()));
+			if(children!=null&&children.size()!=0) {
 			for(Node child : children) {
-				if(child.getScore()>maxs) {
+				if(child.getScore()>tooStrong) {
+					if(child.getScore()>maxs) {
 					max = child;
 					maxs = child.getScore();
+					}
 				}
 			}
-			leaf = select(max);
+			}
+			if(max == null) {
+				Node child = current.randomChild();
+				current.addChild(child);
+				return child;
+			}else {
+				leaf = select(max);
+			}
 		}
 			
 		
@@ -48,17 +79,16 @@ public class PlayerMCTS{
 	}
 
 	public Node expand(Node leaf) {
-		System.out.println(leaf.color);
+		//System.out.println(leaf.color);
+		Node rand = null;
 		if(leaf.isLeaf) {
-			leaf.createChildren();
+			rand = leaf.randomChild();
 			
 		}
 		
-		//store children of node in arraylist
-		ArrayList<Node> children = leaf.getChildren();
-		
+	
 		//if children is null then it is a leaf node
-		if(children==null||children.size()==0) {
+		if(rand==null) {
 				System.out.println("bottom of the tree");
 				//This node is the bottom of the tree
 				return leaf;
@@ -67,23 +97,26 @@ public class PlayerMCTS{
 		// otherwise explore random child
 		else {
 			//System.out.println("random child");
-			return children.get((int) (Math.random()*children.size()));		
+			leaf.addChild(rand);
+			return rand;		
 		}
 		
 	}
 	
-	public Node simulate(Node sim) {
+	public Node simulate(Node sim,int count) {
+		count = count +1;
 		if(sim.parent!= null) 
 			sim.parent.isLeaf = false;
-		sim.createChildren();
-		ArrayList<Node> children = sim.getChildren();
-		if(children.size()==0) {
+		Node randChild = sim.randomChild();
+		if(randChild == null) {
 			System.out.println("no children");
 			return sim;
 		}else {
 			//System.out.println("sim rand");
-			Node rand = children.get((int) (Math.random()*children.size()));
-			sim = simulate(rand);
+			if(count%25==0) 
+				System.out.println(count);
+			sim.addChild(randChild);
+			sim = simulate(randChild,count);
 		}
 			
 		/* moved to backprop
@@ -124,7 +157,6 @@ public class PlayerMCTS{
 			//move up each node while updating
 			no=no.parent;
 		}
-		System.out.println("backprop end");
 		
 	}
 	
@@ -135,15 +167,13 @@ public class PlayerMCTS{
 			// make objectoutputstream to write to file using try/catch
 			// may be missing some catch statements
 			try {
-				OutputStream file = new FileOutputStream("AmazonsMem.Ser");
-				OutputStream buffer = new BufferedOutputStream (file);
+				FileOutputStream file = new FileOutputStream("AmazonsMem.gz");
+				OutputStream buffer = new GZIPOutputStream (file);
 				ObjectOutput output = new ObjectOutputStream(buffer);
-				try {
-					output.writeObject(name);
-				}
-				finally {
-					output.close();
-				}
+				
+				output.writeObject(name);
+				output.close();
+				System.out.println("saved to file");
 			}
 			catch(Exception e){
 				e.printStackTrace();

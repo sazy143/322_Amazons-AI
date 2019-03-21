@@ -67,7 +67,7 @@ public class Game {
 			
 			Node exp = train.expand(sel);
 			
-			Node sim = train.simulate(exp);
+			Node sim = train.simulate(exp,0);
 			
 			train.backprop(sim);
 			System.out.println("completed a simulation");
@@ -76,7 +76,7 @@ public class Game {
 				train.updatetofile(train.root);
 			}
 			
-			System.out.println(root.getChildren().size());
+			
 			
 		}
 		

@@ -20,9 +20,9 @@ public class Competitive {
 		
 	}
 	
-	public void setTree(String loadfile){
+	public void setTree(){
 		try{
-			InputStream file = new FileInputStream(loadfile);
+			InputStream file = new FileInputStream("AmazonsMem.ser");
 			InputStream buffer = new BufferedInputStream(file);
 			ObjectInput input = new ObjectInputStream (buffer);
 			tree = (Node)input.readObject();

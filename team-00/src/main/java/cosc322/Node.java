@@ -11,7 +11,7 @@ public class Node implements Serializable{
 	Node parent;
 	String[][] state;
 	String color;
-	ArrayList<Node> children;
+	ArrayList<Node> children = new ArrayList<Node>();
 	boolean isLeaf = true;
 	String move;
 	
@@ -22,8 +22,8 @@ public class Node implements Serializable{
 		
 	}
 	//If this node is a leaf this will generate all the children
-	public void createChildren(){
-		ArrayList<Node> children = new ArrayList<>();
+	public ArrayList<Node> createChildren(){
+		ArrayList<Node> children = this.children;
 		Board b = new Board(state);
 		String nc;
 		if(color.equals("W"))
@@ -41,7 +41,25 @@ public class Node implements Serializable{
 			children.add(new Node(boards.get(i),nc,this,childrenMoves.get(i)));
 		}
 		
-		this.children = children;
+		return children;
+	}
+	public Node randomChild() {
+		Board b = new Board(state);
+		String nc;
+		if(color.equals("W"))
+			nc = "B";
+		else
+			nc = "W";
+		ArrayList<String> childrenMoves = b.getValidMoves(nc);
+		if(childrenMoves.isEmpty()) {
+			return null;
+		}
+		String move  = childrenMoves.get((int)(Math.random()*childrenMoves.size()));
+		b.move(move);
+		return new Node(b,nc,this,move);
+	}
+	public void addChild(Node child) {
+		this.children.add(child);
 	}
 	
 	public ArrayList<Node> getChildren(){
