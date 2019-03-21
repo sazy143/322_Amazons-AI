@@ -111,13 +111,13 @@ public class PlayerMCTS{
 		if(randChild == null) {
 			System.out.println("no children");
 			return sim;
-		}else {
-			//System.out.println("sim rand");
-			if(count%25==0) 
-				System.out.println(count);
-			sim.addChild(randChild);
-			sim = simulate(randChild,count);
 		}
+			//System.out.println("sim rand");
+			//if(count>100) 
+				System.out.println(new Board(sim.state).toString());
+			sim.addChild(randChild);
+			return simulate(randChild,count);
+		
 			
 		/* moved to backprop
 		//current color doesn't match top of color, count as winner
@@ -129,7 +129,7 @@ public class PlayerMCTS{
 		*/
 		
 		//return bottom node
-		return sim;
+		//return sim;
 	}
 	
 	public void backprop(Node no) {

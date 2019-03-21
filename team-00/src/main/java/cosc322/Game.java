@@ -61,8 +61,9 @@ public class Game {
 		//create our players
 		PlayerMCTS train = new PlayerMCTS();
 		Node root = train.root;
-		while(true) {
-			
+		int count = 0;
+		while(count<1) {
+			count++;
 			Node sel = train.select(root);
 			
 			Node exp = train.expand(sel);
