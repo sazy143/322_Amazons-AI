@@ -12,8 +12,9 @@ public class Node {
 	String color;
 	ArrayList<Node> children;
 	boolean isLeaf = true;
+	String move;
 	
-	Node(Board b, String color, Node parent){
+	Node(Board b, String color, Node parent,String move){
 		this.state = b.getState();
 		this.color = color;
 		this.parent = parent;
@@ -36,7 +37,7 @@ public class Node {
 			boards.add(cb);
 		}
 		for(int i =0; i<boards.size();i++) {
-			children.add(new Node(boards.get(i),nc,this));
+			children.add(new Node(boards.get(i),nc,this,childrenMoves.get(i)));
 		}
 		
 		this.children = children;

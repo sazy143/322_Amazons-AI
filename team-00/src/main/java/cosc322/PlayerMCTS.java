@@ -17,7 +17,7 @@ public class PlayerMCTS {
 
 	Node root;
 	PlayerMCTS(){
-		root = new Node(new Board(),"W",null);
+		root = new Node(new Board(),"W",null,null);
 		
 	}
 	
