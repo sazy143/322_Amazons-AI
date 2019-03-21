@@ -115,6 +115,7 @@ public class PlayerMCTS{
 			//System.out.println("sim rand");
 			//if(count>100) 
 				System.out.println(new Board(sim.state).toString());
+				System.out.println(sim.move);
 			sim.addChild(randChild);
 			return simulate(randChild,count);
 		

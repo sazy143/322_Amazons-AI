@@ -19,7 +19,7 @@ public class Node implements Serializable{
 		this.state = b.getState();
 		this.color = color;
 		this.parent = parent;
-		
+		this.move = move;
 	}
 	//If this node is a leaf this will generate all the children
 	public ArrayList<Node> createChildren(){
@@ -30,7 +30,7 @@ public class Node implements Serializable{
 			nc = "B";
 		else
 			nc = "W";
-		ArrayList<String> childrenMoves = b.getValidMoves(nc);
+		ArrayList<String> childrenMoves = b.getValidMoves(color);
 		ArrayList<Board> boards = new ArrayList<Board>();
 		for(int i =0;i<childrenMoves.size();i++) {
 			Board cb = new Board(b.getState());
