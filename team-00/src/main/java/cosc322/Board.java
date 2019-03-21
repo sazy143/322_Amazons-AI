@@ -71,7 +71,7 @@ public class Board extends JPanel{
 //			System.out.println(moves.get(i));
 //		}
 		//list how many potential moves the player has/had
-		System.out.println(player+" had "+moves.size()+" potential moves!");
+		//System.out.println(player+" had "+moves.size()+" potential moves!");
 		return moves;
 	}
 	//Method to find valid arrow moves takes in valid queen move returns viable move

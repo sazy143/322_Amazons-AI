@@ -6,18 +6,19 @@ import java.io.IOException;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
 import org.jdom.Parent;
 
-public class PlayerMCTS {
+public class PlayerMCTS{
 //lots to do here lol
 
 
 
 	Node root;
 	PlayerMCTS(){
-		root = new Node(new Board(),"W",null,null);
+		root = new Node(new Board(),"B",null,null);
 		
 	}
 	
@@ -28,22 +29,24 @@ public class PlayerMCTS {
 		double maxs = Integer.MIN_VALUE;
 		if(current.isLeaf) {
 			return current;
-		}
-		while(!current.isLeaf||current.getChildren().size()!=0) {
+		}else {
 			children = current.getChildren();
-			for(Node child : children) {
-				if(child.getScore()>maxs) {
-					max = child;
-					maxs = child.getScore();
-				}
-			}
-			leaf = select(max);
+			max = children.get((int) (Math.random()*children.size()));
+//			for(Node child : children) {
+//				if(child.getScore()>maxs) {
+//					max = child;
+//					maxs = child.getScore();
+//				}
+//			}
+			select(max);
 		}
+			
+		
 		return leaf;
 	}
 
 	public Node expand(Node leaf) {
-		//leaf.createChildren();
+		leaf.createChildren();
 		//boolean for now to end game: fix
 		boolean gameEnd = false;
 		//store children of node in arraylist
@@ -63,15 +66,17 @@ public class PlayerMCTS {
 	}
 	
 	public Node simulate(Node sim) {
-		//store start of current node color
-		String color2=sim.color;
 		
-		//while it's child is not the same as itself, since in previous method we return itself if no children
-		while(sim!=expand(sim)) {
-			//node = child and iterate through tree
-			sim=expand(sim);
-			
+		sim.parent.isLeaf = false;
+		sim.createChildren();
+		ArrayList<Node> children = sim.getChildren();
+		if(children.size()==0) {
+			return sim;
+		}else {
+			Node rand = children.get((int) (Math.random()*children.size()));
+			simulate(rand);
 		}
+			
 		/* moved to backprop
 		//current color doesn't match top of color, count as winner
 		if(sim.color!=color2) {
@@ -90,12 +95,13 @@ public class PlayerMCTS {
 		// boolean to keep tracking of winning/losing nodes
 		boolean winlose = false;
 		//check if has parent, then child=parent
-		while(no.parent!=null) {
+		while(no!=null) {
+			
 			//update plays
 			no.plays=no.plays+1;
 			
 			//bottom node is a loser
-			if(winlose=false) {
+			if(winlose==false) {
 			winlose=true;
 			
 			}
@@ -109,14 +115,14 @@ public class PlayerMCTS {
 			//move up each node while updating
 			no=no.parent;
 		}
-		
+		System.out.println("backprop end");
 		
 	}
 	
 	public void updatetofile(Node name) {
 		// update to file about every 20-30 times
 		// if statement might be more useful to be better in a seperate section, so this method isn't being called everytime
-		if(name.plays%25==0) {
+		//if(name.plays%25==0) {
 			// make objectoutputstream to write to file using try/catch
 			// may be missing some catch statements
 			try {
@@ -130,10 +136,10 @@ public class PlayerMCTS {
 					output.close();
 				}
 			}
-			catch(IOException e){
-				System.out.println("IOException error");
+			catch(Exception e){
+				e.printStackTrace();
 			}
-		}
+		//}
 	}
 	
 

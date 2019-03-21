@@ -1,9 +1,10 @@
 package cosc322;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 //The tree needs nodes
-public class Node {
+public class Node implements Serializable{
 	int wins = 0;
 	int plays = 0;
 	double econst = Math.sqrt(2);

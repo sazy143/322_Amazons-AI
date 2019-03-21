@@ -59,27 +59,23 @@ public class Game {
 		//create our game
 		Game game = new Game("test","test");
 		//create our players
-		PlayerHuman p1 = new PlayerHuman("B");
-		PlayerHuman p2 = new PlayerHuman("W");
-		//run the game
+		PlayerMCTS train = new PlayerMCTS();
+		Node root = train.root;
 		while(true) {
-			String turn = game.turn;
-			String move = null;
-			boolean valid = false;
-			System.out.println("Its player "+turn+" turn!");
-			while(!valid) {
-				if(turn.equals(p1.getColor())) {
-					move = p1.move();
-					System.out.println(move);
-				}
-				else {
-					move = p2.move();
-					System.out.println(move);
-				}
-				valid = game.makemove(move);
+			System.out.println("checkpoint1");
+			Node sel = train.select(root);
+			System.out.println("checkpoint2");
+			Node exp = train.expand(sel);
+			System.out.println("checkpoint3");
+			Node sim = train.simulate(exp);
+			System.out.println("checkpoint4");
+			train.backprop(sim);
+			System.out.println("completed a simulation");
+			System.out.println("plays:"+train.root.plays+" wins:"+train.root.wins);
+			if(train.root.plays%30==0) {
+				train.updatetofile(train.root);
 			}
-			game.nextTurn();
-			//System.out.println(game.board.toString());
+			
 		}
 		
 		
