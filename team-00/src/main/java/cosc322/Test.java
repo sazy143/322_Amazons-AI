@@ -15,7 +15,8 @@ public class Test {
 		Game game = new Game("test","test");
 		Competitive player1 = new Competitive("W",game.board);
 		player1.setTree();
-		PlayerHuman player2 = new PlayerHuman("B");
+		Competitive player2 = new Competitive("B",game.board);
+		player2.setTree();
 		while(true) {
 			String turn = game.turn;
 			String move = null;
@@ -25,16 +26,26 @@ public class Test {
 				if(turn.equals(player1.color)) {
 					move = player1.chooseMove();
 					System.out.println(move);
+					player2.recieveMove(move);
+					try {
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else {
-					while(!valid) {
-					move = player2.move();
+					move = player2.chooseMove();
 					
 					System.out.println(move);
-					valid = game.makemove(move);
-				}
+					
 				player1.recieveMove(move);
-				
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			game.nextTurn();
 			//System.out.println(game.board.toString());

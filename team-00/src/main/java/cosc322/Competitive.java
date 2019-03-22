@@ -60,6 +60,7 @@ public class Competitive {
 			if(random == null) {
 				return "no more moves found";
 			}
+			System.out.println("no children random move");
 			current = random;
 			return random.move;
 		}else {
@@ -78,6 +79,11 @@ public class Competitive {
 		System.out.println(current.color);
 		String[] split = move.split("-");
 		String color = split[0];
+		String oc;
+		if(color.equals("W"))
+			oc = "B";
+		else 
+			oc = "W";
 //		int pqx = Integer.parseInt(split[1])-1;
 //		int pqy = Integer.parseInt(split[2])-1;
 //		int qx = Integer.parseInt(split[3])-1;
@@ -101,28 +107,16 @@ public class Competitive {
 					break;
 				}
 			}
-		}else {
-			ArrayList<String> validMoves = b.getValidMoves(current.color);
-			for(String om : validMoves) {
-				if(om.equals(move)) {
-					valid = true;
-					System.out.println("This is valid but we dont know it");
-					b.move(move);
-					Node child = new Node(b.getState(),opColor,current,move);
-					current.addChild(child);
-					current = child;
-					break;
-				}
-			}
-			
 		}
-		if(valid == false) {
-			System.out.println("this is not a valid move but we will still play you");
+		if(valid==false){
+			System.out.println("unknown move");
 			b.move(move);
-			Node child = new Node(b.getState(),opColor,current,move);
+			Node child = new Node(b.getState(),oc,current,move);
 			current.addChild(child);
 			current = child;
+			
 		}
+		
 	}
 	
 	
