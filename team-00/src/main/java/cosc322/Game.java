@@ -47,6 +47,19 @@ PlayerMCTS class implement backpropagation
 
 There is more todo but cannot think of right now, and we will figure it out regardless, but these are the first steps above
 
+
+
+
+starts game with "game-start" message
+
+send Move message(int[] queenPosCurrent, int[] queenPosNew, int{} arrowpos)
+
+join room (String name)
+
+public boolean handleGamemessage(String messagetype, Map<String,Object>,msgDetails)
+note: above method also ued in amazons.java
+
+
 ************************************************/
 public class Game {
 	Board board;
