@@ -28,8 +28,14 @@ public class Test {
 		ArrayList<Node> children = tree.getChildren();
 		System.out.println(children.size());
 		for(Node child :children) {
-			System.out.println(child.getScore());
+			double score = child.wins;
+			//if(score>1)
+			System.out.println(score);
 		}
+//		Board b = new Board();
+//		ArrayList<String> qmoves = b.queenMoves(3,0,"W");
+//		for(String move : qmoves) {
+//			System.out.println(move);
+//		}
 	}
-
 }

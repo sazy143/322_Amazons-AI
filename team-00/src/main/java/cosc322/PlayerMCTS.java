@@ -24,6 +24,7 @@ public class PlayerMCTS{
 
 
 	Node root;
+	Board b;
 	PlayerMCTS(){
 		//black always starts first
 //		try {
@@ -39,10 +40,11 @@ public class PlayerMCTS{
 //			//e.printStackTrace();
 //			root = new Node(new Board(),"B",null,null);
 //		}
-		root = new Node(new Board(),"B",null,null);
+		root = new Node(new Board().getState(),"B",null,null);
 	}
 	
 	public Node select(Node current) {
+		
 		ArrayList<Node> children;
 		Node leaf = null;
 		Node max = null;
@@ -66,7 +68,7 @@ public class PlayerMCTS{
 			}
 			}
 			if(max == null) {
-				Node child = current.randomChild();
+				Node child = current.randomChild(b);
 				current.addChild(child);
 				return child;
 			}else {
@@ -82,7 +84,7 @@ public class PlayerMCTS{
 		//System.out.println(leaf.color);
 		Node rand = null;
 		if(leaf.isLeaf) {
-			rand = leaf.randomChild();
+			rand = leaf.randomChild(b);
 			
 		}
 		
@@ -107,15 +109,16 @@ public class PlayerMCTS{
 		count = count +1;
 		if(sim.parent!= null) 
 			sim.parent.isLeaf = false;
-		Node randChild = sim.randomChild();
+		Node randChild = sim.randomChild(b);
 		if(randChild == null) {
 			System.out.println("no children");
 			return sim;
 		}
 			//System.out.println("sim rand");
-			//if(count>100) 
-				System.out.println(new Board(sim.state).toString());
-				System.out.println(sim.move);
+			if(count%100==0)
+				System.out.println(count);
+				//System.out.println(b.toString());
+				//System.out.println(sim.move);
 			sim.addChild(randChild);
 			return simulate(randChild,count);
 		

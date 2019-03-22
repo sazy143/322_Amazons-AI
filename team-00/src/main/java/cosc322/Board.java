@@ -18,9 +18,7 @@ public class Board extends JPanel{
 	//can change board size with size
 	int size = 10;
 	int GUISize = 600;
-	//the positions of our queens(not used for anything right now);
-	int[] Queensx = {0,0,3,3,6,6,9,9};
-	int[] Queensy = {3,6,0,9,0,9,3,6};
+	
 	//define board size
 	String[][] matrix = new String[size][size];
 	
@@ -50,6 +48,11 @@ public class Board extends JPanel{
 		}
 	}
 	
+	public Board shallowCopy() {
+		Board copy = new Board(this.getState());
+		return copy;
+	}
+	
 	//Will return an array list of all valid moves for whoever the player is either "B" or "W"
 	public ArrayList<String> getValidMoves(String player){
 		//two array list one to get valid queen moves the other to store valid arrow shots from each queen
@@ -59,7 +62,7 @@ public class Board extends JPanel{
 		for(int i = 0; i<size; i++) {
 			for(int j = 0; j<size; j++	) {
 				if(matrix[i][j].equalsIgnoreCase(player)) {
-					qMoves.addAll(queenMoves(j, i, player));
+					qMoves.addAll(queenMoves(i, j, player));
 				}
 			}
 		}
@@ -133,7 +136,7 @@ public class Board extends JPanel{
 		return aMoves;
 	}
 	//Method to find viable queen moves takes in that queens starting point, and their color returns that queens move set
-	private ArrayList<String> queenMoves(int x, int y, String player) {
+	public ArrayList<String> queenMoves(int x, int y, String player) {
 		//array to store the viable moves
 		ArrayList<String> moves = new ArrayList<String>();
 		//search all 8 directions for viable queen moves
@@ -201,12 +204,12 @@ public class Board extends JPanel{
 	public void move(String move) {
 		String[] split = move.split("-");
 		String turn = split[0];
-		int pqy = Integer.parseInt(split[1])-1;
-		int pqx = Integer.parseInt(split[2])-1;
-		int qy = Integer.parseInt(split[3])-1;
-		int qx = Integer.parseInt(split[4])-1;
-		int ay = Integer.parseInt(split[5])-1;
-		int ax = Integer.parseInt(split[6])-1;
+		int pqx = Integer.parseInt(split[1])-1;
+		int pqy = Integer.parseInt(split[2])-1;
+		int qx = Integer.parseInt(split[3])-1;
+		int qy = Integer.parseInt(split[4])-1;
+		int ax = Integer.parseInt(split[5])-1;
+		int ay = Integer.parseInt(split[6])-1;
 		matrix[pqx][pqy] = ".";
 		if(turn.equalsIgnoreCase("W")) 
 			matrix[qx][qy] = "W";

@@ -15,8 +15,8 @@ public class Node implements Serializable{
 	boolean isLeaf = true;
 	String move;
 	
-	Node(Board b, String color, Node parent,String move){
-		this.state = b.getState();
+	Node(String[][] state, String color, Node parent,String move){
+		this.state = state;
 		this.color = color;
 		this.parent = parent;
 		this.move = move;
@@ -38,25 +38,34 @@ public class Node implements Serializable{
 			boards.add(cb);
 		}
 		for(int i =0; i<boards.size();i++) {
-			children.add(new Node(boards.get(i),nc,this,childrenMoves.get(i)));
+			children.add(new Node(boards.get(i).getState(),nc,this,childrenMoves.get(i)));
 		}
 		
 		return children;
 	}
-	public Node randomChild() {
-		Board b = new Board(state);
+	public Node randomChild(Board b) {
 		String nc;
 		if(color.equals("W"))
 			nc = "B";
 		else
 			nc = "W";
-		ArrayList<String> childrenMoves = b.getValidMoves(nc);
+		ArrayList<String> childrenMoves = b.getValidMoves(this.color);
+		
 		if(childrenMoves.isEmpty()) {
 			return null;
 		}
+		
 		String move  = childrenMoves.get((int)(Math.random()*childrenMoves.size()));
+		if(children!=null&&children.size()>0) {
+		for(int i =0;i<children.size();i++) {
+			if(children.get(i).move.equals(move)) {
+				b.move(children.get(i).move);
+				return children.get(i);
+			}
+		}
+		}
 		b.move(move);
-		return new Node(b,nc,this,move);
+		return new Node(b.getState(),nc,this,move);
 	}
 	public void addChild(Node child) {
 		this.children.add(child);
@@ -73,7 +82,7 @@ public class Node implements Serializable{
 			return 0;
 		}
 		else {
-			return (wins/plays)+econst*Math.sqrt(Math.log(plays)/plays);
+			return (wins/plays)+econst*Math.sqrt((Math.log(plays)/plays));
 		}
 	}
 
