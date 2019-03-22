@@ -21,18 +21,21 @@ public class Test {
 			String move = null;
 			boolean valid = false;
 			System.out.println("Its player "+turn+" turn!");
-			//while(!valid) {
+			System.out.println(player1.b.toString());
 				if(turn.equals(player1.color)) {
 					move = player1.chooseMove();
 					System.out.println(move);
 				}
 				else {
+					while(!valid) {
 					move = player2.move();
-					player1.recieveMove(move);
+					
 					System.out.println(move);
+					valid = game.makemove(move);
 				}
-				//valid = game.makemove(move);
-			//}
+				player1.recieveMove(move);
+				
+			}
 			game.nextTurn();
 			//System.out.println(game.board.toString());
 		}

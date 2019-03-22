@@ -45,6 +45,7 @@ public class Competitive {
 	}
 	
 	public String chooseMove(){
+		System.out.println(current.color);
 		if(!current.color.equals(color)) {
 			return "out of turn play";
 		}
@@ -74,6 +75,7 @@ public class Competitive {
 		return move;
 	}
 	public void recieveMove(String move) {
+		System.out.println(current.color);
 		String[] split = move.split("-");
 		String color = split[0];
 //		int pqx = Integer.parseInt(split[1])-1;
@@ -85,7 +87,7 @@ public class Competitive {
 		
 		boolean valid = false;
 		
-		if(!color.equals(current.color)) {
+		if(!opColor.equals(current.color)) {
 			System.out.println("out of turn playing anyways");
 		}
 		ArrayList<Node> children = current.getChildren();
@@ -100,13 +102,15 @@ public class Competitive {
 				}
 			}
 		}else {
-			ArrayList<String> validMoves = b.getValidMoves(opColor);
+			ArrayList<String> validMoves = b.getValidMoves(current.color);
 			for(String om : validMoves) {
 				if(om.equals(move)) {
 					valid = true;
 					System.out.println("This is valid but we dont know it");
 					b.move(move);
-					current = new Node(b.getState(),opColor,current,move);
+					Node child = new Node(b.getState(),opColor,current,move);
+					current.addChild(child);
+					current = child;
 					break;
 				}
 			}
@@ -115,7 +119,9 @@ public class Competitive {
 		if(valid == false) {
 			System.out.println("this is not a valid move but we will still play you");
 			b.move(move);
-			current = new Node(b.getState(),opColor,current,move);
+			Node child = new Node(b.getState(),opColor,current,move);
+			current.addChild(child);
+			current = child;
 		}
 	}
 	
