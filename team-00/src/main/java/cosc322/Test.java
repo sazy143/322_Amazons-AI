@@ -11,31 +11,31 @@ import java.util.zip.GZIPInputStream;
 public class Test {
 
 	public static void main(String[] args) {
-		Node tree = null;
-		try{
-			FileInputStream file = new FileInputStream("AmazonsMem.gz");
-			InputStream buffer = new GZIPInputStream(file);
-			ObjectInput input = new ObjectInputStream (buffer);
-			tree = (Node)input.readObject();
-			System.out.println("Root node/tree loaded");
-			input.close();
-		}
-		catch(Exception e){
-			System.out.println("Your fucked good luck with all random moves");
-			e.printStackTrace();
+		
+		Game game = new Game("test","test");
+		Competitive player1 = new Competitive("W",game.board);
+		player1.setTree();
+		PlayerHuman player2 = new PlayerHuman("B");
+		while(true) {
+			String turn = game.turn;
+			String move = null;
+			boolean valid = false;
+			System.out.println("Its player "+turn+" turn!");
+			//while(!valid) {
+				if(turn.equals(player1.color)) {
+					move = player1.chooseMove();
+					System.out.println(move);
+				}
+				else {
+					move = player2.move();
+					player1.recieveMove(move);
+					System.out.println(move);
+				}
+				//valid = game.makemove(move);
+			//}
+			game.nextTurn();
+			//System.out.println(game.board.toString());
 		}
 
-		ArrayList<Node> children = tree.getChildren();
-		System.out.println(children.size());
-		for(Node child :children) {
-			double score = child.getScore();
-			if(score>1.6)
-			System.out.println(score);
-		}
-//		Board b = new Board();
-//		ArrayList<String> qmoves = b.queenMoves(3,0,"W");
-//		for(String move : qmoves) {
-//			System.out.println(move);
-//		}
 	}
 }

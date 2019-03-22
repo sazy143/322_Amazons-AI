@@ -53,7 +53,7 @@ public class Game {
 	JFrame guiFrame;
 	String name;
 	private GameClient gameClient;
-	String turn = "W";
+	String turn = "B";
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//create our game
