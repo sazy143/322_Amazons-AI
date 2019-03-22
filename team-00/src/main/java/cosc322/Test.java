@@ -28,8 +28,8 @@ public class Test {
 		ArrayList<Node> children = tree.getChildren();
 		System.out.println(children.size());
 		for(Node child :children) {
-			double score = child.wins;
-			//if(score>1)
+			double score = child.getScore();
+			if(score>1.6)
 			System.out.println(score);
 		}
 //		Board b = new Board();

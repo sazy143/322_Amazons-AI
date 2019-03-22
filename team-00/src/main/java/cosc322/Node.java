@@ -60,12 +60,15 @@ public class Node implements Serializable{
 		for(int i =0;i<children.size();i++) {
 			if(children.get(i).move.equals(move)) {
 				b.move(children.get(i).move);
+				System.out.println("same child");
 				return children.get(i);
 			}
 		}
 		}
 		b.move(move);
-		return new Node(b.getState(),nc,this,move);
+		Node child = new Node(b.getState(),nc,this,move);
+		children.add(child);
+		return child;
 	}
 	public void addChild(Node child) {
 		this.children.add(child);
@@ -82,7 +85,7 @@ public class Node implements Serializable{
 			return 0;
 		}
 		else {
-			return (wins/plays)+econst*Math.sqrt((Math.log(plays)/plays));
+			return (wins/plays)+(Math.log(plays));
 		}
 	}
 

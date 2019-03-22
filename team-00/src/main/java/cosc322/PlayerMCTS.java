@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 import org.jdom.Parent;
@@ -27,20 +28,20 @@ public class PlayerMCTS{
 	Board b;
 	PlayerMCTS(){
 		//black always starts first
-//		try {
-//			InputStream file = new FileInputStream("AmazonsMem.ser");
-//			InputStream buffer = new BufferedInputStream(file);
-//			ObjectInput input = new ObjectInputStream (buffer);
-//			root = (Node)input.readObject();
-//			System.out.println("Root node/tree loaded");
-//			input.close();
-//		}
-//		catch(Exception e){
-//			System.out.println("No file found run as normal");
-//			//e.printStackTrace();
-//			root = new Node(new Board(),"B",null,null);
-//		}
-		root = new Node(new Board().getState(),"B",null,null);
+		try {
+			InputStream file = new FileInputStream("AmazonsMem.gz");
+			InputStream buffer = new GZIPInputStream(file);
+			ObjectInput input = new ObjectInputStream (buffer);
+			root = (Node)input.readObject();
+			System.out.println("Root node/tree loaded");
+			input.close();
+		}
+		catch(Exception e){
+			System.out.println("No file found run as normal");
+			//e.printStackTrace();
+			root = new Node(new Board().getState(),"B",null,null);
+		}
+		//root = new Node(new Board().getState(),"B",null,null);
 	}
 	
 	public Node select(Node current) {
@@ -49,7 +50,7 @@ public class PlayerMCTS{
 		Node leaf = null;
 		Node max = null;
 		double maxs = Integer.MIN_VALUE;
-		double tooStrong = 2;
+		double tooStrong = 1.8;
 		if(current.isLeaf) {
 			
 			return current;
@@ -69,7 +70,6 @@ public class PlayerMCTS{
 			}
 			if(max == null) {
 				Node child = current.randomChild(b);
-				current.addChild(child);
 				return child;
 			}else {
 				leaf = select(max);
@@ -99,7 +99,6 @@ public class PlayerMCTS{
 		// otherwise explore random child
 		else {
 			//System.out.println("random child");
-			leaf.addChild(rand);
 			return rand;		
 		}
 		
@@ -119,7 +118,6 @@ public class PlayerMCTS{
 				System.out.println(count);
 				//System.out.println(b.toString());
 				//System.out.println(sim.move);
-			sim.addChild(randChild);
 			return simulate(randChild,count);
 		
 			
