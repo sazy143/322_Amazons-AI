@@ -62,7 +62,7 @@ public class Game {
 		PlayerMCTS train = new PlayerMCTS();
 		Node root = train.root;
 		int count = 0;
-		while(count<20000) {
+		while(count<10000) {
 			count++;
 			Board board = new Board();
 			train.b = board;
@@ -75,7 +75,7 @@ public class Game {
 			train.backprop(sim);
 			System.out.println("completed a simulation");
 			System.out.println("plays:"+train.root.plays+" wins:"+train.root.wins);
-			if(train.root.plays%20000==0) {
+			if(train.root.plays%10000==0) {
 				train.updatetofile(train.root);
 			}
 			

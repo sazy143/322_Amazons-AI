@@ -26,7 +26,7 @@ public class Test {
 					move = player1.chooseMove();
 					System.out.println(move);
 					try {
-						Thread.sleep(100);
+						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -44,7 +44,7 @@ public class Test {
 					
 					player1.recieveMove(move);
 				try {
-					Thread.sleep(100);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

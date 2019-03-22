@@ -85,8 +85,12 @@ public class Board extends JPanel{
 		//get the queens new position
 		String str = qMove.toString();
 		String[] parsed = str.split("-");
+		int pxq = Integer.parseInt(parsed[1]);
+		int pyq = Integer.parseInt(parsed[2]);
 		int qx = Integer.parseInt(parsed[3]);
 		int qy = Integer.parseInt(parsed[4]);
+		matrix[pxq-1][pyq-1] = ".";
+		
 		//let us search all 8 directions until collision or not on board
 		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
 		for(String dir : directions) {
@@ -132,7 +136,7 @@ public class Board extends JPanel{
 				
 			}
 		}
-		
+		matrix[pxq-1][pyq-1] = parsed[0];
 		return aMoves;
 	}
 	//Method to find viable queen moves takes in that queens starting point, and their color returns that queens move set
