@@ -15,8 +15,7 @@ public class Test {
 		Game game = new Game("test","test");
 		Competitive player1 = new Competitive("W",game.board);
 		player1.setTree();
-		Competitive player2 = new Competitive("B",game.board);
-		player2.setTree();
+		String player2 = "B";
 		while(true) {
 			String turn = game.turn;
 			String move = null;
@@ -26,22 +25,26 @@ public class Test {
 				if(turn.equals(player1.color)) {
 					move = player1.chooseMove();
 					System.out.println(move);
-					player2.recieveMove(move);
 					try {
-						Thread.sleep(5000);
+						Thread.sleep(100);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				else {
-					move = player2.chooseMove();
+					ArrayList<String> moves = game.board.getValidMoves(player2);
+					if(moves==null||moves.size()==0) {
+						System.out.println("player2 lost");
+						break;
+					}
+					move = moves.get((int)(Math.random()*moves.size()));
 					
-					System.out.println(move);
+					System.out.println("Random: "+move);
 					
-				player1.recieveMove(move);
+					player1.recieveMove(move);
 				try {
-					Thread.sleep(5000);
+					Thread.sleep(100);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
