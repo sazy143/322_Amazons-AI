@@ -91,13 +91,12 @@ public class Game extends GamePlayer{
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-		while(System.currentTimeMillis()-timeout<4000) {
+		while(System.currentTimeMillis()-timeout<500) {
 			player.searchFromCurrent();
 		}
 		String move = player.chooseMove();
-		board.move(move);
+		//board.move(move);
 		String[] parsed = move.split("-");
-		int[] together = new int[6];
 		int[] qf = new int[2];
 		qf[0] = Integer.parseInt(parsed[1]);
 		qf[1] = Integer.parseInt(parsed[2]);
@@ -109,30 +108,15 @@ public class Game extends GamePlayer{
 		int[] ar = new int[2];
 		ar[0] = Integer.parseInt(parsed[5]);
 		ar[1] = Integer.parseInt(parsed[6]);
-		together[0] = qf[0]; 
-		together[1] = qf[1]; 
-		together[2] = qn[0]; 
-		together[3] = qn[1]; 
-		together[4] = ar[0]; 
-		together[5] = ar[1]; 
+
 		
-		int[] moves = together;
-		int[] queenPosCurrent = new int[2];
-		int[] queenPosNew = new int[2];
-		int[] arrowPos = new int[2];
-		queenPosCurrent[0]	=moves[0];
-		queenPosCurrent[1]	=moves[1];
-		queenPosNew[0]	=moves[2];
-		queenPosNew[1]	=moves[3];
-		arrowPos[0]	=moves[4];
-		arrowPos[1]	=moves[5];
 		
 		System.out.println(move);
-		System.out.println(board.toString());
+		//System.out.println(board.toString());
 		//To send a move message, call this method with the required data  
 		//this.gameClient.sendMoveMessage(qf, qn, ar);
 		nextTurn();
-		gameClient.sendMoveMessage(queenPosCurrent, queenPosNew, arrowPos);
+		gameClient.sendMoveMessage(qf, qn, ar);
 	}
 	public boolean handleGameMessage(String messageType, Map<String, Object> msgDetails){
 		
@@ -154,15 +138,15 @@ public class Game extends GamePlayer{
 	    }
 	
 	public void handleOpponentMove(Map<String, Object> msgDetails){
-		System.out.println("OpponentMove(): " + msgDetails.get(AmazonsGameMessage.QUEEN_POS_CURR));
+//		System.out.println("OpponentMove(): " + msgDetails.get(AmazonsGameMessage.QUEEN_POS_CURR));
 		ArrayList<Integer> qcurr = (ArrayList<Integer>) msgDetails.get(AmazonsGameMessage.QUEEN_POS_CURR);
 		ArrayList<Integer> qnew = (ArrayList<Integer>) msgDetails.get(AmazonsGameMessage.Queen_POS_NEXT);
 		ArrayList<Integer> arrow = (ArrayList<Integer>) msgDetails.get(AmazonsGameMessage.ARROW_POS);
-//		System.out.println("QCurr: " + qcurr);
-//		System.out.println("QNew: " + qnew);
-//		System.out.println("Arrow: " + arrow);	
+		System.out.println("QCurr: " + qcurr);
+		System.out.println("QNew: " + qnew);
+		System.out.println("Arrow: " + arrow);	
 		String move = turn+"-"+qcurr.get(0)+"-"+qcurr.get(1)+"-"+qnew.get(0)+"-"+qnew.get(1)+"-"+arrow.get(0)+"-"+arrow.get(1);
-		board.move(move);
+		//board.move(move);
 		player.recieveMove(move);
 		
 		try {

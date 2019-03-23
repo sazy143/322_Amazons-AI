@@ -78,15 +78,15 @@ public class Competitive {
 		double maxs = Integer.MIN_VALUE;
 		ArrayList<Node> children = current.getChildren();
 		Node random = null;
-		if(children.size()==0) {
-			random = current.randomChild(b);
+		if(children.size()==0||children==null) {
+			max = current.randomChild(b);
 			if(random == null) {
 				return "no more moves found";
 			}
-			System.out.println("no children random move");
-			current = random;
-			return random.move;
+
 		}else {
+			max = children.get(0);
+			maxs = children.get(0).getScore();
 			for(Node child : children) {
 				double score = child.getScore();
 				if(score>maxs) {
@@ -95,6 +95,8 @@ public class Competitive {
 				}
 			}
 		}
+		System.out.println(children.size());
+		System.out.println(max);
 		move = max.move;
 		System.out.println("The strongest child had a "+max.wins+" "+max.plays+"% win rate from "+max.getScore()+" simulations");
 		b.move(move);

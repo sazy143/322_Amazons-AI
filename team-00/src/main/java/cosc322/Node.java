@@ -87,8 +87,12 @@ public class Node implements Serializable{
 //			int pp = 0;
 //			if(parent!=null)
 //				pp = parent.plays;
-//			double score = (wins/plays)+econst*Math.sqrt(Math.log(pp)/plays);
-			return (wins/plays)*Math.log(wins)*1.2;
+			if(wins==0) {
+				return 0;
+			}
+			double score = ((double)wins/plays)*Math.log(wins)*1.2;
+			
+			return score;
 		}
 	}
 
