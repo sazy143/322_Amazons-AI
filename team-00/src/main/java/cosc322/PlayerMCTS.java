@@ -28,6 +28,7 @@ public class PlayerMCTS{
 	Board b;
 	PlayerMCTS(){
 		//black always starts first
+		
 		try {
 			InputStream file = new FileInputStream("AmazonsMem.gz");
 			InputStream buffer = new GZIPInputStream(file);
@@ -70,7 +71,10 @@ public class PlayerMCTS{
 			}
 			if(max == null) {
 				Node child = current.randomChild(b);
-				return child;
+				if(child==null) {
+					return current;
+				}
+				leaf = select(child);
 			}else {
 				leaf = select(max);
 			}
@@ -104,40 +108,43 @@ public class PlayerMCTS{
 		
 	}
 	
-	public Node simulate(Node sim,int count) {
-		count = count +1;
+	public Node simulate(Node sim) {
+		
 		if(sim.parent!= null) 
 			sim.parent.isLeaf = false;
+		ArrayList<Node> children = sim.getChildren();
+		double maxs = 0;
+		Node max = null;
+		if(children!=null&&children.size()!=0) {
+		for(Node child : children) {
+			if(child.getScore()>1.8) {
+				if(child.getScore()>maxs) {
+				max = child;
+				maxs = child.getScore();
+				}
+			}
+		}
+		}
+		if(max!=null) {
+			return simulate(max);
+		}
 		Node randChild = sim.randomChild(b);
 		if(randChild == null) {
-			System.out.println("no children");
+			//System.out.println("no children");
 			return sim;
 		}
-			//System.out.println("sim rand");
-			if(count%100==0)
-				System.out.println(count);
-				//System.out.println(b.toString());
-				//System.out.println(sim.move);
-			return simulate(randChild,count);
+		
+	
+			return simulate(randChild);
 		
 			
-		/* moved to backprop
-		//current color doesn't match top of color, count as winner
-		if(sim.color!=color2) {
-			sim.wins=sim.wins+1;
-		}
-		//update plays
-		sim.plays=sim.plays+1;
-		*/
 		
-		//return bottom node
-		//return sim;
 	}
 	
 	public void backprop(Node no) {
 		
 		// boolean to keep tracking of winning/losing nodes
-		boolean winlose = false;
+		boolean winlose = true;
 		//check if has parent, then child=parent
 		while(no!=null) {
 			
@@ -163,11 +170,7 @@ public class PlayerMCTS{
 	}
 	
 	public void updatetofile(Node name) {
-		// update to file about every 20-30 times
-		// if statement might be more useful to be better in a seperate section, so this method isn't being called everytime
-		//if(name.plays%25==0) {
-			// make objectoutputstream to write to file using try/catch
-			// may be missing some catch statements
+
 			try {
 				FileOutputStream file = new FileOutputStream("AmazonsMem.gz");
 				OutputStream buffer = new GZIPOutputStream (file);
@@ -180,7 +183,6 @@ public class PlayerMCTS{
 			catch(Exception e){
 				e.printStackTrace();
 			}
-		//}
 	}
 	
 

@@ -13,7 +13,7 @@ while(count<20000) {   		//change 20000 to however many iterations you want
 	
 	Node exp = train.expand(sel);
 	
-	Node sim = train.simulate(exp,0);
+	Node sim = train.simulate(exp);
 	
 	train.backprop(sim);
 	System.out.println("completed a simulation");

@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 //The tree needs nodes
 public class Node implements Serializable{
-	int wins = 0;
-	int plays = 0;
-	double econst = Math.sqrt(2);
+	double wins = 0;
+	double plays = 0;
 	Node parent;
 	String[][] state;
 	String color;
@@ -60,7 +59,7 @@ public class Node implements Serializable{
 		for(int i =0;i<children.size();i++) {
 			if(children.get(i).move.equals(move)) {
 				b.move(children.get(i).move);
-				System.out.println("same child");
+				//System.out.println("same child");
 				return children.get(i);
 			}
 		}
@@ -85,7 +84,11 @@ public class Node implements Serializable{
 			return 0;
 		}
 		else {
-			return (wins/plays)+(Math.log(plays));
+//			int pp = 0;
+//			if(parent!=null)
+//				pp = parent.plays;
+//			double score = (wins/plays)+econst*Math.sqrt(Math.log(pp)/plays);
+			return (wins/plays)*Math.log(wins)*1.2;
 		}
 	}
 

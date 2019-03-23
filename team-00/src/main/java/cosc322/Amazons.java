@@ -47,6 +47,7 @@ public class Amazons extends GamePlayer{
 	
        this.usrName = name;		       	   
        setupGUI();       
+       
                      
        connectToServer(name, passwd);        
     }

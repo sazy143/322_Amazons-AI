@@ -12,47 +12,34 @@ public class Test {
 
 	public static void main(String[] args) {
 		
-		Game game = new Game("test","test");
-		Competitive player1 = new Competitive("W",game.board);
-		player1.setTree();
-		String player2 = "B";
-		while(true) {
-			String turn = game.turn;
-			String move = null;
-			boolean valid = false;
-			System.out.println("Its player "+turn+" turn!");
-			System.out.println(player1.b.toString());
-				if(turn.equals(player1.color)) {
-					move = player1.chooseMove();
-					System.out.println(move);
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				else {
-					ArrayList<String> moves = game.board.getValidMoves(player2);
-					if(moves==null||moves.size()==0) {
-						System.out.println("player2 lost");
-						break;
-					}
-					move = moves.get((int)(Math.random()*moves.size()));
-					
-					System.out.println("Random: "+move);
-					
-					player1.recieveMove(move);
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			game.nextTurn();
-			//System.out.println(game.board.toString());
-		}
 
+		Competitive player1 = new Competitive("W",new Board());
+		Competitive player2 = new Competitive("B",new Board());
+
+		Game game = new Game("team13","test",player1);
+		Game game2 = new Game("team132","test",player2);
+		
+//		//create our players
+//		PlayerMCTS train = new PlayerMCTS();
+//		Node root = train.root;
+//		int count = 0;
+//		while(count<20000) {   		//change 20000 to however many iterations you want
+//			count++;
+//			Board board = new Board();
+//			train.b = board;
+//			Node sel = train.select(root);
+//			
+//			Node exp = train.expand(sel);
+//			
+//			Node sim = train.simulate(exp);
+//			
+//			train.backprop(sim);
+//			System.out.println("completed a simulation");
+//			System.out.println("plays:"+train.root.plays+" wins:"+train.root.wins);
+//			if(train.root.plays%20000==0) {			//change the 20000 to match above (save at end of training)
+//				train.updatetofile(train.root);
+//			}
+//		}
+		
 	}
 }
