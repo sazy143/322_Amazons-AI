@@ -92,7 +92,7 @@ public class Game extends GamePlayer{
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-		while(System.currentTimeMillis()-timeout<10000) {
+		while(System.currentTimeMillis()-timeout<1000) {
 			player.searchFromCurrent();
 		}
 		long hFreeSize = Runtime.getRuntime().freeMemory(); 
@@ -114,7 +114,7 @@ public class Game extends GamePlayer{
 		ar[1] = Integer.parseInt(parsed[6]);
 
 		
-		System.out.println(board.toString());
+		//System.out.println(board.toString());
 		System.out.println(move+"/n");
 		//System.out.println(board.toString());
 		//To send a move message, call this method with the required data  
@@ -169,7 +169,7 @@ public class Game extends GamePlayer{
 		for(String room : rooms) {
 			System.out.println(room);
 		}
-		this.gameClient.joinRoom(rooms.get(5));
+		this.gameClient.joinRoom(rooms.get(6));
 	    }
 	
 	

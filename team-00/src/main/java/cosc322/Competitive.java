@@ -75,26 +75,61 @@ public class Competitive {
 		String move = null;
 		boolean rand = false;
 		Node max = null;
+		Node smax = null;
 		double maxs = Integer.MIN_VALUE;
 		ArrayList<Node> children = current.getChildren();
+		ArrayList<String> validMoves = b.getValidMoves(color);
+		ArrayList<Node> validChildren = new ArrayList<Node>();
+		for(String vmove : validMoves) {
+			for(Node cc : children) {
+				if(vmove.equals(cc.move)) {
+					validChildren.add(cc);
+					break;
+				}
+			}
+		}
+		System.out.println(children.size()+" children "+validChildren.size()+" valid children");
+		
 		Node random = null;
-		if(children.size()==0||children==null) {
+		if(validChildren.size()==0||validChildren==null) {
 			max = current.randomChild(b);
 			if(random == null) {
 				return "no more moves found";
 			}
 
 		}else {
-			max = children.get(0);
-			maxs = children.get(0).getScore();
-			for(Node child : children) {
+			max = validChildren.get(0);
+			//smax = children.get(0);
+			maxs = validChildren.get(0).getScore();
+			for(Node child : validChildren) {
 				double score = child.getScore();
 				if(score>maxs) {
+					smax = max;
 					maxs = score;
 					max = child;
+					
 				}
 			}
 		}
+		//NEED A SECOND CHECKER CAUSE OF WEIRD GLITCH
+//		boolean bad = true;
+//		ArrayList<String> validMoves = b.getValidMoves(color);
+//		for(String cmove : validMoves) {
+//			if(cmove.equals(max.move)) {
+//				bad =false;
+//				break;
+//			}else if(cmove.equals(smax.move)){
+//				System.out.println("somehow this move is bad");
+//			}
+//		}
+//		if(bad ==true) {
+//			System.out.println("there was a wrong move found");
+//			move = smax.move;
+//			System.out.println("The strongest child had a "+(((double)smax.wins)/smax.plays)+"% win rate from "+smax.plays+" simulations");
+//			b.move(move);
+//			current = smax;
+//			return move;
+//		}
 		//System.out.println(children.size());
 		//System.out.println(max);
 		move = max.move;
