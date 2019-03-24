@@ -95,10 +95,10 @@ public class Competitive {
 				}
 			}
 		}
-		System.out.println(children.size());
-		System.out.println(max);
+		//System.out.println(children.size());
+		//System.out.println(max);
 		move = max.move;
-		System.out.println("The strongest child had a "+max.wins+" "+max.plays+"% win rate from "+max.getScore()+" simulations");
+		System.out.println("The strongest child had a "+(((double)max.wins)/max.plays)+"% win rate from "+max.plays+" simulations");
 		b.move(move);
 		current = max;
 		return move;
@@ -138,12 +138,6 @@ public class Competitive {
 			oc = "B";
 		else 
 			oc = "W";
-//		int pqx = Integer.parseInt(split[1])-1;
-//		int pqy = Integer.parseInt(split[2])-1;
-//		int qx = Integer.parseInt(split[3])-1;
-//		int qy = Integer.parseInt(split[4])-1;
-//		int ax = Integer.parseInt(split[5])-1;
-//		int ay = Integer.parseInt(split[6])-1;
 		
 		boolean valid = false;
 		

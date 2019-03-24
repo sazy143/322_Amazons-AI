@@ -89,7 +89,7 @@ public class Board extends JPanel{
 		int pyq = Integer.parseInt(parsed[2]);
 		int qx = Integer.parseInt(parsed[3]);
 		int qy = Integer.parseInt(parsed[4]);
-		matrix[pxq-1][pyq-1] = ".";
+		matrix[pxq][pyq] = ".";
 		
 		//let us search all 8 directions until collision or not on board
 		String[] directions = {"N","NE","E","SE","S","SW","W","NW"};
@@ -101,8 +101,8 @@ public class Board extends JPanel{
 			if(len==2) {	
 				second = dir.charAt(1);
 			}
-			int nx = qx-1;
-			int ny = qy-1;
+			int nx = qx;
+			int ny = qy;
 			while(!obstruction) {
 				
 				if(first == 'N')
@@ -126,7 +126,7 @@ public class Board extends JPanel{
 				//its a free spoot there for a valid move
 				else if(matrix[nx][ny].equals(".")) {
 					
-					aMoves.add(new String(qMove+((nx+1)+"-"+(ny+1))));
+					aMoves.add(new String(qMove+((nx)+"-"+(ny))));
 				}
 				//otherwise it hit an object
 				else {
@@ -136,7 +136,7 @@ public class Board extends JPanel{
 				
 			}
 		}
-		matrix[pxq-1][pyq-1] = parsed[0];
+		matrix[pxq][pyq] = parsed[0];
 		return aMoves;
 	}
 	//Method to find viable queen moves takes in that queens starting point, and their color returns that queens move set
@@ -176,7 +176,7 @@ public class Board extends JPanel{
 					obstruction = true;
 				//open board spot there for viable move
 				else if(matrix[nx][ny].equals(".")) {
-					moves.add(new String(player+"-"+(x+1)+"-"+(y+1)+"-"+(nx+1)+"-"+(ny+1)+"-"));
+					moves.add(new String(player+"-"+(x)+"-"+(y)+"-"+(nx)+"-"+(ny)+"-"));
 				}
 				//otherwise hit an obstruction
 				else {
@@ -208,12 +208,12 @@ public class Board extends JPanel{
 	public void move(String move) {
 		String[] split = move.split("-");
 		String turn = split[0];
-		int pqx = Integer.parseInt(split[1])-1;
-		int pqy = Integer.parseInt(split[2])-1;
-		int qx = Integer.parseInt(split[3])-1;
-		int qy = Integer.parseInt(split[4])-1;
-		int ax = Integer.parseInt(split[5])-1;
-		int ay = Integer.parseInt(split[6])-1;
+		int pqx = Integer.parseInt(split[1]);
+		int pqy = Integer.parseInt(split[2]);
+		int qx = Integer.parseInt(split[3]);
+		int qy = Integer.parseInt(split[4]);
+		int ax = Integer.parseInt(split[5]);
+		int ay = Integer.parseInt(split[6]);
 		matrix[pqx][pqy] = ".";
 		if(turn.equalsIgnoreCase("W")) 
 			matrix[qx][qy] = "W";
@@ -245,7 +245,7 @@ public class Board extends JPanel{
 	    }
 		
 		g.setColor(Color.BLACK);
-		g.drawRect(offset-1, offset-1, 10*posize+2, 10*posize+2);
+		g.drawRect(offset, offset, 10*posize+2, 10*posize+2);
 		for(int i = 0; i<size; i++) {
 			g.drawString(Integer.toString(i+1), i*posize+offset+(posize/2)-5, 20);
 			g.drawString(Integer.toString(i+1), 2, i*posize+offset+(posize/2)+5);
@@ -255,10 +255,10 @@ public class Board extends JPanel{
 				String value = matrix[r][c];
 				if((r+c)%2==0) {
 					g.setColor(Color.decode("#efafa2"));
-					g.fillRect(c*posize+offset, r*posize+offset, posize+1, posize+1);
+					g.fillRect(c*posize+offset, r*posize+offset, posize, posize);
 				}else {
 					g.setColor(Color.decode("#ffdfd8"));
-					g.fillRect(c*posize+offset, r*posize+offset, posize+1, posize+1);
+					g.fillRect(c*posize+offset, r*posize+offset, posize, posize);
 				}
 				if(value.equalsIgnoreCase("W")) {
 					g.drawImage(queenW, c*posize+offset, r*posize+offset, posize, posize, null);

@@ -87,15 +87,19 @@ public class Game extends GamePlayer{
 	public void connectToServer(String name, String password) {
 		
 		gameClient = new GameClient(name, password,this);
+		
 	}
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-		while(System.currentTimeMillis()-timeout<500) {
+		while(System.currentTimeMillis()-timeout<10000) {
 			player.searchFromCurrent();
 		}
+		long hFreeSize = Runtime.getRuntime().freeMemory(); 
+		System.out.println("There is "+hFreeSize+" memory left");
 		String move = player.chooseMove();
-		//board.move(move);
+		board.move(move);
+		//System.out.println(board.toString());
 		String[] parsed = move.split("-");
 		int[] qf = new int[2];
 		qf[0] = Integer.parseInt(parsed[1]);
@@ -110,8 +114,8 @@ public class Game extends GamePlayer{
 		ar[1] = Integer.parseInt(parsed[6]);
 
 		
-		
-		System.out.println(move);
+		System.out.println(board.toString());
+		System.out.println(move+"/n");
 		//System.out.println(board.toString());
 		//To send a move message, call this method with the required data  
 		//this.gameClient.sendMoveMessage(qf, qn, ar);
@@ -142,13 +146,14 @@ public class Game extends GamePlayer{
 		ArrayList<Integer> qcurr = (ArrayList<Integer>) msgDetails.get(AmazonsGameMessage.QUEEN_POS_CURR);
 		ArrayList<Integer> qnew = (ArrayList<Integer>) msgDetails.get(AmazonsGameMessage.Queen_POS_NEXT);
 		ArrayList<Integer> arrow = (ArrayList<Integer>) msgDetails.get(AmazonsGameMessage.ARROW_POS);
-		System.out.println("QCurr: " + qcurr);
-		System.out.println("QNew: " + qnew);
-		System.out.println("Arrow: " + arrow);	
+//		System.out.println("QCurr: " + qcurr);
+//		System.out.println("QNew: " + qnew);
+//		System.out.println("Arrow: " + arrow);	
 		String move = turn+"-"+qcurr.get(0)+"-"+qcurr.get(1)+"-"+qnew.get(0)+"-"+qnew.get(1)+"-"+arrow.get(0)+"-"+arrow.get(1);
-		//board.move(move);
+		board.move(move);
 		player.recieveMove(move);
-		
+		//System.out.println(move);
+		//System.out.println(board.toString());
 		try {
 			Thread.sleep(100);
 		}catch(Exception e) {
@@ -164,7 +169,7 @@ public class Game extends GamePlayer{
 		for(String room : rooms) {
 			System.out.println(room);
 		}
-		this.gameClient.joinRoom(rooms.get(2));
+		this.gameClient.joinRoom(rooms.get(5));
 	    }
 	
 	
