@@ -117,7 +117,7 @@ public class PlayerMCTS{
 		Node max = null;
 		if(children!=null&&children.size()!=0) {
 		for(Node child : children) {
-			if(child.getScore()>1.8) {
+			if(child.getScore()>2.5) {
 				if(child.getScore()>maxs) {
 				max = child;
 				maxs = child.getScore();
@@ -148,6 +148,34 @@ public class PlayerMCTS{
 		//check if has parent, then child=parent
 		while(no!=null) {
 			
+			//update plays
+			no.plays=no.plays+1;
+			
+			//bottom node is a loser
+			if(winlose==false) {
+			winlose=true;
+			
+			}
+			// tops above bottom and alternating are winners
+			else {
+			winlose=false;	
+			//update wins
+			no.wins=no.wins+1;
+			}
+			
+			//move up each node while updating
+			no=no.parent;
+		}
+		
+	}
+public void backprop2(Node no,Node top) {
+		
+		// boolean to keep tracking of winning/losing nodes
+		boolean winlose = true;
+		//check if has parent, then child=parent
+		while(no!=null) {
+			if(no==top.parent&&top.parent!=null)
+				break;
 			//update plays
 			no.plays=no.plays+1;
 			

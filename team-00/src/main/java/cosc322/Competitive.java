@@ -63,7 +63,7 @@ public class Competitive {
 		//Node sel = mcts.select(current);
 		//Node exp = mcts.expand(sel);
 		Node sim = mcts.simulate(current);
-		mcts.backprop(sim);
+		mcts.backprop2(sim,current);
 	}
 	
 	public String chooseMove(){
@@ -81,12 +81,16 @@ public class Competitive {
 		ArrayList<String> validMoves = b.getValidMoves(color);
 		ArrayList<Node> validChildren = new ArrayList<Node>();
 		for(String vmove : validMoves) {
+			
 			for(Node cc : children) {
+				
 				if(vmove.equals(cc.move)) {
 					validChildren.add(cc);
+					
 					break;
 				}
 			}
+			
 		}
 		System.out.println(children.size()+" children "+validChildren.size()+" valid children");
 		
@@ -112,28 +116,9 @@ public class Competitive {
 			}
 		}
 		//NEED A SECOND CHECKER CAUSE OF WEIRD GLITCH
-//		boolean bad = true;
-//		ArrayList<String> validMoves = b.getValidMoves(color);
-//		for(String cmove : validMoves) {
-//			if(cmove.equals(max.move)) {
-//				bad =false;
-//				break;
-//			}else if(cmove.equals(smax.move)){
-//				System.out.println("somehow this move is bad");
-//			}
-//		}
-//		if(bad ==true) {
-//			System.out.println("there was a wrong move found");
-//			move = smax.move;
-//			System.out.println("The strongest child had a "+(((double)smax.wins)/smax.plays)+"% win rate from "+smax.plays+" simulations");
-//			b.move(move);
-//			current = smax;
-//			return move;
-//		}
-		//System.out.println(children.size());
-		//System.out.println(max);
+		current.parent = null;
 		move = max.move;
-		System.out.println("The strongest child had a "+(((double)max.wins)/max.plays)+"% win rate from "+max.plays+" simulations");
+		System.out.println("The strongest child had a "+format.format(((double)max.wins)/max.plays)+"% win rate from "+max.plays+" simulations, score:"+format.format(max.getScore()));
 		b.move(move);
 		current = max;
 		return move;
