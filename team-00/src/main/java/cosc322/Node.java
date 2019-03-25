@@ -42,13 +42,13 @@ public class Node implements Serializable{
 		
 		return children;
 	}
-	public Node randomChild(Board b) {
+	public Node randomChild(Board b , ArrayList<String> moves) {
 		String nc;
 		if(color.equals("W"))
 			nc = "B";
 		else
 			nc = "W";
-		ArrayList<String> childrenMoves = b.getValidMoves(this.color);
+		ArrayList<String> childrenMoves = moves;
 		
 		if(childrenMoves.isEmpty()) {
 			return null;

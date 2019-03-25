@@ -96,7 +96,7 @@ public class Competitive {
 		
 		Node random = null;
 		if(validChildren.size()==0||validChildren==null) {
-			max = current.randomChild(b);
+			max = current.randomChild(b,b.getValidMoves(color));
 			if(random == null) {
 				return "no more moves found";
 			}

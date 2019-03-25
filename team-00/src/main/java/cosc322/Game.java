@@ -91,9 +91,16 @@ public class Game extends GamePlayer{
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-		while(System.currentTimeMillis()-timeout<5000) {
-			player.searchFromCurrent();
+		if(player.color.equals("W")) {
+			while(System.currentTimeMillis()-timeout<2000) {
+				player.searchFromCurrent();
+			}
+		}else {
+			while(System.currentTimeMillis()-timeout<10000) {
+				player.searchFromCurrent();
+			}
 		}
+			
 		String move = player.chooseMove();
 		board.move(move);
 		String[] parsed = move.split("-");
@@ -112,7 +119,7 @@ public class Game extends GamePlayer{
 		
 		
 		System.out.println(move);
-		System.out.println(board.toString());
+		//System.out.println(board.toString());
 		//System.out.println(board.toString());
 		//To send a move message, call this method with the required data  
 		//this.gameClient.sendMoveMessage(qf, qn, ar);

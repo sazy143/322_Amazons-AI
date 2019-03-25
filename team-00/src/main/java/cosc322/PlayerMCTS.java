@@ -70,7 +70,8 @@ public class PlayerMCTS{
 			}
 			}
 			if(max == null) {
-				Node child = current.randomChild(b);
+				
+				Node child = current.randomChild(b,b.getValidMoves(current.color));
 				if(child==null) {
 					return current;
 				}
@@ -88,7 +89,7 @@ public class PlayerMCTS{
 		//System.out.println(leaf.color);
 		Node rand = null;
 		if(leaf.isLeaf) {
-			rand = leaf.randomChild(b);
+			rand = leaf.randomChild(b,b.getValidMoves(leaf.color));
 			
 		}
 		
@@ -117,7 +118,7 @@ public class PlayerMCTS{
 		Node max = null;
 		if(children!=null&&children.size()!=0) {
 		for(Node child : children) {
-			if(child.getScore()>2.5) {
+			if(child.getScore()>2.8) {
 				if(child.getScore()>maxs) {
 				max = child;
 				maxs = child.getScore();
@@ -128,7 +129,7 @@ public class PlayerMCTS{
 		if(max!=null) {
 			return simulate(max);
 		}
-		Node randChild = sim.randomChild(b);
+		Node randChild = sim.randomChild(b,b.getValidMoves(sim.color));
 		if(randChild == null) {
 			//System.out.println("no children");
 			return sim;
