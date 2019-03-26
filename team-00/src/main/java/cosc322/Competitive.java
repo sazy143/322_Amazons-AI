@@ -92,6 +92,13 @@ public class Competitive {
 			}
 			
 		}
+		if((validMoves.size()!=0&&validMoves!=null)&&(validChildren.size()==0)) {
+			System.out.println("fuck");
+			String fuckme = validMoves.get((int)(validMoves.size()*Math.random()));
+			b.move(fuckme);
+			current = new Node(b.getState(),color,current,fuckme);
+			return fuckme;
+		}
 		System.out.println(children.size()+" children "+validChildren.size()+" valid children");
 		
 		Node random = null;
@@ -116,7 +123,7 @@ public class Competitive {
 			}
 		}
 		//NEED A SECOND CHECKER CAUSE OF WEIRD GLITCH
-		current.parent = null;
+		//current.parent = null;
 		move = max.move;
 		System.out.println("The strongest child had a "+format.format(((double)max.wins)/max.plays)+"% win rate from "+max.plays+" simulations, score:"+format.format(max.getScore()));
 		b.move(move);

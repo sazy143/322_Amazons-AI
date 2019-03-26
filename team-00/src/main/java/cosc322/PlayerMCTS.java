@@ -118,7 +118,7 @@ public class PlayerMCTS{
 		Node max = null;
 		if(children!=null&&children.size()!=0) {
 		for(Node child : children) {
-			if(child.getScore()>2.8) {
+			if(child.getScore()>2.5) {
 				if(child.getScore()>maxs) {
 				max = child;
 				maxs = child.getScore();

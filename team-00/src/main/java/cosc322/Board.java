@@ -85,10 +85,10 @@ public class Board extends JPanel{
 		//get the queens new position
 		String str = qMove.toString();
 		String[] parsed = str.split("-");
-		int pxq = Integer.parseInt(parsed[1]);
-		int pyq = Integer.parseInt(parsed[2]);
-		int qx = Integer.parseInt(parsed[3]);
-		int qy = Integer.parseInt(parsed[4]);
+		int pxq = Integer.parseInt(parsed[1])-1;
+		int pyq = Integer.parseInt(parsed[2])-1;
+		int qx = Integer.parseInt(parsed[3])-1;
+		int qy = Integer.parseInt(parsed[4])-1;
 		matrix[pxq][pyq] = ".";
 		
 		//let us search all 8 directions until collision or not on board
@@ -126,7 +126,7 @@ public class Board extends JPanel{
 				//its a free spoot there for a valid move
 				else if(matrix[nx][ny].equals(".")) {
 					
-					aMoves.add(new String(qMove+((nx)+"-"+(ny))));
+					aMoves.add(new String(qMove+((nx+1)+"-"+(ny+1))));
 				}
 				//otherwise it hit an object
 				else {
@@ -176,7 +176,7 @@ public class Board extends JPanel{
 					obstruction = true;
 				//open board spot there for viable move
 				else if(matrix[nx][ny].equals(".")) {
-					moves.add(new String(player+"-"+(x)+"-"+(y)+"-"+(nx)+"-"+(ny)+"-"));
+					moves.add(new String(player+"-"+(x+1)+"-"+(y+1)+"-"+(nx+1)+"-"+(ny+1)+"-"));
 				}
 				//otherwise hit an obstruction
 				else {
@@ -208,12 +208,12 @@ public class Board extends JPanel{
 	public void move(String move) {
 		String[] split = move.split("-");
 		String turn = split[0];
-		int pqx = Integer.parseInt(split[1]);
-		int pqy = Integer.parseInt(split[2]);
-		int qx = Integer.parseInt(split[3]);
-		int qy = Integer.parseInt(split[4]);
-		int ax = Integer.parseInt(split[5]);
-		int ay = Integer.parseInt(split[6]);
+		int pqx = Integer.parseInt(split[1])-1;
+		int pqy = Integer.parseInt(split[2])-1;
+		int qx = Integer.parseInt(split[3])-1;
+		int qy = Integer.parseInt(split[4])-1;
+		int ax = Integer.parseInt(split[5])-1;
+		int ay = Integer.parseInt(split[6])-1;
 		matrix[pqx][pqy] = ".";
 		if(turn.equalsIgnoreCase("W")) 
 			matrix[qx][qy] = "W";

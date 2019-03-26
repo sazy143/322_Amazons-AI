@@ -91,17 +91,15 @@ public class Game extends GamePlayer{
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-		if(player.color.equals("W")) {
-			while(System.currentTimeMillis()-timeout<2000) {
+			while(System.currentTimeMillis()-timeout<3000) {
 				player.searchFromCurrent();
-			}
-		}else {
-			while(System.currentTimeMillis()-timeout<10000) {
-				player.searchFromCurrent();
-			}
+			
 		}
 			
 		String move = player.chooseMove();
+		if(move==null) {
+			System.out.println("Game Over! No more moves :(");
+		}else {
 		board.move(move);
 		String[] parsed = move.split("-");
 		int[] qf = new int[2];
@@ -125,6 +123,7 @@ public class Game extends GamePlayer{
 		//this.gameClient.sendMoveMessage(qf, qn, ar);
 		nextTurn();
 		gameClient.sendMoveMessage(qf, qn, ar);
+		}
 	}
 	public boolean handleGameMessage(String messageType, Map<String, Object> msgDetails){
 		
@@ -169,10 +168,10 @@ public class Game extends GamePlayer{
 
 		//once logged in, the gameClient will have  the names of available game rooms  
 		ArrayList<String> rooms = this.gameClient.getRoomList();
-		for(String room : rooms) {
-			System.out.println(room);
-		}
-		this.gameClient.joinRoom(rooms.get(2));
+//		for(String room : rooms) {
+//			System.out.println(room);
+//		}
+		this.gameClient.joinRoom(rooms.get(8));
 	    }
 	
 	
