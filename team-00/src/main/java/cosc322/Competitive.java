@@ -62,7 +62,7 @@ public class Competitive {
 		mcts.b = this.b.shallowCopy();
 		//Node sel = mcts.select(current);
 		//Node exp = mcts.expand(sel);
-		Node sim = mcts.simulate(current);
+		Node sim = mcts.simulate(current,current);
 		mcts.backprop2(sim,current);
 	}
 	

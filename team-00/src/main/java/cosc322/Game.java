@@ -91,13 +91,14 @@ public class Game extends GamePlayer{
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-			while(System.currentTimeMillis()-timeout<3000) {
+			while(System.currentTimeMillis()-timeout<14000) {
 				player.searchFromCurrent();
 			
 		}
 			
 		String move = player.chooseMove();
-		if(move==null) {
+		if(move==null||move.length()==0) {
+			
 			System.out.println("Game Over! No more moves :(");
 		}else {
 		board.move(move);
@@ -123,6 +124,7 @@ public class Game extends GamePlayer{
 		//this.gameClient.sendMoveMessage(qf, qn, ar);
 		nextTurn();
 		gameClient.sendMoveMessage(qf, qn, ar);
+		System.out.println("move sent");
 		}
 	}
 	public boolean handleGameMessage(String messageType, Map<String, Object> msgDetails){
@@ -171,7 +173,8 @@ public class Game extends GamePlayer{
 //		for(String room : rooms) {
 //			System.out.println(room);
 //		}
-		this.gameClient.joinRoom(rooms.get(8));
+		this.gameClient.joinRoom(rooms.get(3));
+		System.out.println("joined: "+rooms.get(3));
 	    }
 	
 	

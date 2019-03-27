@@ -109,7 +109,7 @@ public class PlayerMCTS{
 		
 	}
 	
-	public Node simulate(Node sim) {
+	public Node simulate(Node sim,Node top) {
 		
 		if(sim.parent!= null) 
 			sim.parent.isLeaf = false;
@@ -118,16 +118,27 @@ public class PlayerMCTS{
 		Node max = null;
 		if(children!=null&&children.size()!=0) {
 		for(Node child : children) {
-			if(child.getScore()>2.5) {
+			if(sim.color.equals(top.color)&&child.getScore()>2.55) {
 				if(child.getScore()>maxs) {
 				max = child;
 				maxs = child.getScore();
 				}
+			}else if(child.getScore()>4){
+				if(child.getScore()>maxs) {
+					max = child;
+					maxs = child.getScore();
+					}
 			}
+//			if(child.getScore()>2.3) {
+//				if(child.getScore()>maxs) {
+//				max = child;
+//				maxs = child.getScore();
+//				}
+//			}
 		}
 		}
 		if(max!=null) {
-			return simulate(max);
+			return simulate(max,top);
 		}
 		Node randChild = sim.randomChild(b,b.getValidMoves(sim.color));
 		if(randChild == null) {
@@ -136,7 +147,7 @@ public class PlayerMCTS{
 		}
 		
 	
-			return simulate(randChild);
+			return simulate(randChild,top);
 		
 			
 		
