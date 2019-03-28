@@ -91,9 +91,14 @@ public class Game extends GamePlayer{
 	
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
-			while(System.currentTimeMillis()-timeout<14000) {
-				player.searchFromCurrent();
-			
+		player.current.checkChildren(board.getValidMoves(turn));
+		int time = 2000;
+		if(player.current.color.equals("B"))
+			time = 2000;
+		while(System.currentTimeMillis()-timeout<time) {
+			player.searchFromCurrent();
+			if(player.current.plays>100000)
+				break;
 		}
 			
 		String move = player.chooseMove();
@@ -102,6 +107,8 @@ public class Game extends GamePlayer{
 			System.out.println("Game Over! No more moves :(");
 		}else {
 		board.move(move);
+		board.repaint();
+		
 		String[] parsed = move.split("-");
 		int[] qf = new int[2];
 		qf[0] = Integer.parseInt(parsed[1]);
@@ -156,6 +163,7 @@ public class Game extends GamePlayer{
 		System.out.println("Arrow: " + arrow);	
 		String move = turn+"-"+qcurr.get(0)+"-"+qcurr.get(1)+"-"+qnew.get(0)+"-"+qnew.get(1)+"-"+arrow.get(0)+"-"+arrow.get(1);
 		board.move(move);
+		board.repaint();
 		player.recieveMove(move);
 		
 		try {
@@ -173,8 +181,8 @@ public class Game extends GamePlayer{
 //		for(String room : rooms) {
 //			System.out.println(room);
 //		}
-		this.gameClient.joinRoom(rooms.get(3));
-		System.out.println("joined: "+rooms.get(3));
+		this.gameClient.joinRoom(rooms.get(15));
+		System.out.println("joined: "+rooms.get(15));
 	    }
 	
 	
@@ -218,7 +226,7 @@ public class Game extends GamePlayer{
 		
 		board = new Board();
 		contentPane.add(board,BorderLayout.CENTER);
-
+		
 	}
 
 	@Override
@@ -227,25 +235,6 @@ public class Game extends GamePlayer{
 		return this.userName;
 	}
 
-	class MyTimer extends TimerTask{
-		GameClient gameClient = null;
-		int[] qf;
-		int[] qn;
-		int[] ar;
-		
-		public MyTimer(GameClient gameClient, int[] qf, int[] qn, int[] ar){	
-		    this.gameClient = gameClient;
-		    this.qf = qf;
-		    this.qn = qn;
-		    this.ar = ar;
-		}
-			
-		/**
-		 * send the move 
-		 */
-		public void run() {
-			gameClient.sendMoveMessage(qf, qn, ar);
-		}
-	    }
+
 }
 

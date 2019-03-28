@@ -220,8 +220,10 @@ public class Board extends JPanel{
 		else
 			matrix[qx][qy] = "B";
 		matrix[ax][ay] = "x";
-		repaint();
+		//repaint();
+		
 	}
+	
 	//get state
 	public String[][] getState(){
 		return matrix;
@@ -245,7 +247,7 @@ public class Board extends JPanel{
 	    }
 		
 		g.setColor(Color.BLACK);
-		g.drawRect(offset, offset, 10*posize+2, 10*posize+2);
+		g.drawRect(offset-1, offset-1, 10*posize+1, 10*posize+1);
 		for(int i = 0; i<size; i++) {
 			g.drawString(Integer.toString(i+1), i*posize+offset+(posize/2)-5, 20);
 			g.drawString(Integer.toString(i+1), 2, i*posize+offset+(posize/2)+5);

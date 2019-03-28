@@ -13,9 +13,8 @@ public class Competitive {
 
 	Board b;
 	String color;
-	Node tree;
 	PlayerMCTS mcts = new PlayerMCTS();
-	Node current = new Node(new Board().getState(),"B",null,null);
+	Node current = new Node("B",null,null);
 	String opColor;
 	DecimalFormat format = new DecimalFormat("##.##");
 	
@@ -28,8 +27,7 @@ public class Competitive {
 		else {
 			opColor = "W";
 		}
-		tree = mcts.root;
-		current = tree;
+		
 		
 	}
 	public void setColor(String color) {
@@ -47,8 +45,8 @@ public class Competitive {
 			InputStream file = new FileInputStream("AmazonsMem.gz");
 			InputStream buffer = new GZIPInputStream(file);
 			ObjectInput input = new ObjectInputStream (buffer);
-			tree = (Node)input.readObject();
-			current = tree;
+			current = (Node)input.readObject();
+			
 			System.out.println("Root node/tree loaded");
 			input.close();
 		}
@@ -73,10 +71,9 @@ public class Competitive {
 			return "out of turn play";
 		}
 		String move = null;
-		boolean rand = false;
 		Node max = null;
-		Node smax = null;
 		double maxs = Integer.MIN_VALUE;
+		//current.checkChildren(b.getValidMoves(color));
 		ArrayList<Node> children = current.getChildren();
 		ArrayList<String> validMoves = b.getValidMoves(color);
 		ArrayList<Node> validChildren = new ArrayList<Node>();
@@ -96,7 +93,7 @@ public class Competitive {
 			System.out.println("fuck");
 			String fuckme = validMoves.get((int)(validMoves.size()*Math.random()));
 			b.move(fuckme);
-			current = new Node(b.getState(),color,current,fuckme);
+			current = new Node(color,current,fuckme);
 			return fuckme;
 		}
 		System.out.println(children.size()+" children "+validChildren.size()+" valid children");
@@ -110,24 +107,26 @@ public class Competitive {
 
 		}else {
 			max = validChildren.get(0);
-			//smax = children.get(0);
 			maxs = validChildren.get(0).getScore();
 			for(Node child : validChildren) {
 				double score = child.getScore();
 				if(score>maxs) {
-					smax = max;
+					
 					maxs = score;
 					max = child;
 					
 				}
 			}
 		}
-		//NEED A SECOND CHECKER CAUSE OF WEIRD GLITCH
-		//current.parent = null;
+		
 		move = max.move;
 		System.out.println("The strongest child had a "+format.format(((double)max.wins)/max.plays)+"% win rate from "+max.plays+" simulations, score:"+format.format(max.getScore()));
 		b.move(move);
 		current = max;
+		
+		//System.out.println("mem befor gc "+Runtime.getRuntime().freeMemory());
+		Runtime.getRuntime().gc();
+		//System.out.println("mem after gc "+Runtime.getRuntime().freeMemory());
 		return move;
 	}
 	public int[] playerMove(){		
@@ -186,8 +185,9 @@ public class Competitive {
 		if(valid==false){
 			System.out.println("unknown move");
 			b.move(move);
-			Node child = new Node(b.getState(),oc,current,move);
+			Node child = new Node(oc,current,move);
 			current.addChild(child);
+			current.parent = null;
 			current = child;
 			
 		}

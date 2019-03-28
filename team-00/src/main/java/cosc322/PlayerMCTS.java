@@ -24,24 +24,10 @@ public class PlayerMCTS{
 
 
 
-	Node root;
 	Board b;
 	PlayerMCTS(){
 		//black always starts first
 		
-		try {
-			InputStream file = new FileInputStream("AmazonsMem.gz");
-			InputStream buffer = new GZIPInputStream(file);
-			ObjectInput input = new ObjectInputStream (buffer);
-			root = (Node)input.readObject();
-			System.out.println("Root node/tree loaded");
-			input.close();
-		}
-		catch(Exception e){
-			System.out.println("No file found run as normal");
-			//e.printStackTrace();
-			root = new Node(new Board().getState(),"B",null,null);
-		}
 		//root = new Node(new Board().getState(),"B",null,null);
 	}
 	
@@ -116,25 +102,23 @@ public class PlayerMCTS{
 		ArrayList<Node> children = sim.getChildren();
 		double maxs = 0;
 		Node max = null;
+		double score = 1.25;
+		if(top.plays>15000)
+			score = 1.5;
+		if(top.plays>40000)
+			score = 2;
+		if(top.plays>80000)
+			score = 4;
 		if(children!=null&&children.size()!=0) {
 		for(Node child : children) {
-			if(sim.color.equals(top.color)&&child.getScore()>2.55) {
+			if(sim.color.equals(top.color)&&child.getScore()>score) {
 				if(child.getScore()>maxs) {
 				max = child;
 				maxs = child.getScore();
 				}
-			}else if(child.getScore()>4){
-				if(child.getScore()>maxs) {
-					max = child;
-					maxs = child.getScore();
-					}
+
 			}
-//			if(child.getScore()>2.3) {
-//				if(child.getScore()>maxs) {
-//				max = child;
-//				maxs = child.getScore();
-//				}
-//			}
+
 		}
 		}
 		if(max!=null) {
