@@ -99,15 +99,19 @@ public class Node implements Serializable{
 //			int pp = 0;
 //			if(parent!=null)
 //				pp = parent.plays;
+			double add = ((double)wins/plays)*Math.log(wins);
 			if(wins==0) {
-				return 0;
+				add = 0;
 			}
 			double sub = 0.5*Math.log((double)plays-wins);
 			
 			if(plays-wins==0){
 				sub = 0;
 			}
-			double score = ((double)wins/plays)*Math.log(wins)-(sub);
+			if(plays-wins==plays) {
+				sub = 500;
+			}
+			double score = add-sub;
 			
 			return score;
 		}

@@ -15,7 +15,7 @@ public class Test {
 
 		Competitive player1 = new Competitive("W",new Board());
 		Competitive player2 = new Competitive("B",new Board());
-		//player1.setTree();
+		player1.setTree();
 		Game game = new Game("team13","test",player1);
 		Game game2 = new Game("team132","test",player2);
 		

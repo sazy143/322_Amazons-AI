@@ -2,19 +2,26 @@ package cosc322;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class Competitive {
 
 	Board b;
 	String color;
 	PlayerMCTS mcts = new PlayerMCTS();
+	//TODO switch and comment
 	Node current = new Node("B",null,null);
+	//Node current = root;
 	String opColor;
 	DecimalFormat format = new DecimalFormat("##.##");
 	
@@ -45,10 +52,13 @@ public class Competitive {
 			InputStream file = new FileInputStream("AmazonsMem.gz");
 			InputStream buffer = new GZIPInputStream(file);
 			ObjectInput input = new ObjectInputStream (buffer);
+			//TODO switch and comment
 			current = (Node)input.readObject();
-			
+			//current = root;
 			System.out.println("Root node/tree loaded");
 			input.close();
+			buffer.close();
+			file.close();
 		}
 		catch(Exception e){
 			System.out.println("Your fucked good luck with all random moves");
@@ -60,6 +70,7 @@ public class Competitive {
 		mcts.b = this.b.shallowCopy();
 		//Node sel = mcts.select(current);
 		//Node exp = mcts.expand(sel);
+		//TODO go back to rcurrent instead of root
 		Node sim = mcts.simulate(current,current);
 		mcts.backprop2(sim,current);
 	}
@@ -122,6 +133,9 @@ public class Competitive {
 		move = max.move;
 		System.out.println("The strongest child had a "+format.format(((double)max.wins)/max.plays)+"% win rate from "+max.plays+" simulations, score:"+format.format(max.getScore()));
 		b.move(move);
+		//TODO uncomment
+		
+		current.parent = null;
 		current = max;
 		
 		//System.out.println("mem befor gc "+Runtime.getRuntime().freeMemory());
@@ -187,12 +201,28 @@ public class Competitive {
 			b.move(move);
 			Node child = new Node(oc,current,move);
 			current.addChild(child);
+			//TODO uncomment
 			current.parent = null;
 			current = child;
 			
 		}
 		
 	}
+	public void updatetofile(Node name) {
+
+		try {
+			FileOutputStream file = new FileOutputStream("AmazonsMem.gz");
+			OutputStream buffer = new GZIPOutputStream (file);
+			ObjectOutput output = new ObjectOutputStream(buffer);
+			
+			output.writeObject(name);
+			output.close();
+			System.out.println("saved to file");
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+}
 	
 	
 }

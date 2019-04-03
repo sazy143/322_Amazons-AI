@@ -102,9 +102,9 @@ public class PlayerMCTS{
 		ArrayList<Node> children = sim.getChildren();
 		double maxs = 0;
 		Node max = null;
-		double score = 1.25;
+		double score = 1.2;
 		if(top.plays>15000)
-			score = 1.5;
+			score = 1.4;
 		if(top.plays>40000)
 			score = 2;
 		if(top.plays>80000)
@@ -193,21 +193,22 @@ public void backprop2(Node no,Node top) {
 		
 	}
 	
-	public void updatetofile(Node name) {
+public void updatetofile(Node name) {
 
-			try {
-				FileOutputStream file = new FileOutputStream("AmazonsMem.gz");
-				OutputStream buffer = new GZIPOutputStream (file);
-				ObjectOutput output = new ObjectOutputStream(buffer);
-				
-				output.writeObject(name);
-				output.close();
-				System.out.println("saved to file");
-			}
-			catch(Exception e){
-				e.printStackTrace();
-			}
+	try {
+		FileOutputStream file = new FileOutputStream("AmazonsMem.gz");
+		OutputStream buffer = new GZIPOutputStream (file);
+		ObjectOutput output = new ObjectOutputStream(buffer);
+		
+		output.writeObject(name);
+		output.close();
+		System.out.println("saved to file");
 	}
+	catch(Exception e){
+		e.printStackTrace();
+	}
+}
+
 	
 
 }

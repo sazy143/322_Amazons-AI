@@ -92,9 +92,10 @@ public class Game extends GamePlayer{
 	public void playerMove(){	
 		long timeout = System.currentTimeMillis();
 		player.current.checkChildren(board.getValidMoves(turn));
-		int time = 2000;
-		if(player.current.color.equals("B"))
-			time = 2000;
+		int time = 15000;
+//		if(player.current.color.equals("B"))
+//			time = 15000;
+		
 		while(System.currentTimeMillis()-timeout<time) {
 			player.searchFromCurrent();
 			if(player.current.plays>100000)
@@ -129,6 +130,9 @@ public class Game extends GamePlayer{
 		//System.out.println(board.toString());
 		//To send a move message, call this method with the required data  
 		//this.gameClient.sendMoveMessage(qf, qn, ar);
+		//TODO save to file
+//		if(System.currentTimeMillis()%3==0)
+//			player.updatetofile(player.root);
 		nextTurn();
 		gameClient.sendMoveMessage(qf, qn, ar);
 		System.out.println("move sent");
@@ -181,8 +185,8 @@ public class Game extends GamePlayer{
 //		for(String room : rooms) {
 //			System.out.println(room);
 //		}
-		this.gameClient.joinRoom(rooms.get(15));
-		System.out.println("joined: "+rooms.get(15));
+		this.gameClient.joinRoom(rooms.get(7));
+		System.out.println("joined: "+rooms.get(7));
 	    }
 	
 	
