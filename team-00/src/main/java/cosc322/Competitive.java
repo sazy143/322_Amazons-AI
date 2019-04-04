@@ -101,7 +101,7 @@ public class Competitive {
 			
 		}
 		if((validMoves.size()!=0&&validMoves!=null)&&(validChildren.size()==0)) {
-			System.out.println("fuck");
+			System.out.println("error");
 			String fuckme = validMoves.get((int)(validMoves.size()*Math.random()));
 			b.move(fuckme);
 			current = new Node(color,current,fuckme);
