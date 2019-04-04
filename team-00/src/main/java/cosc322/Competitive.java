@@ -61,7 +61,7 @@ public class Competitive {
 			file.close();
 		}
 		catch(Exception e){
-			System.out.println("Your fucked good luck with all random moves");
+			System.out.println("You're screwed. Good luck with all random moves");
 			
 			e.printStackTrace();
 		}
@@ -102,10 +102,10 @@ public class Competitive {
 		}
 		if((validMoves.size()!=0&&validMoves!=null)&&(validChildren.size()==0)) {
 			System.out.println("error");
-			String fuckme = validMoves.get((int)(validMoves.size()*Math.random()));
-			b.move(fuckme);
-			current = new Node(color,current,fuckme);
-			return fuckme;
+			String problem = validMoves.get((int)(validMoves.size()*Math.random()));
+			b.move(problem);
+			current = new Node(color,current,problem);
+			return problem;
 		}
 		System.out.println(children.size()+" children "+validChildren.size()+" valid children");
 		
