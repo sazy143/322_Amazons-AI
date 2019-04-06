@@ -22,7 +22,7 @@ public class Training {
 			input.close();
 		}
 		catch(Exception e){
-			System.out.println("Your fucked good luck with all random moves");
+			System.out.println("good luck with all random moves");
 			
 			e.printStackTrace();
 		}
